@@ -1,10 +1,13 @@
 /*
-heap and heap sort for chaper 6.1 - 6.3
-
+heap and heap sort for chaper 6.1 - 6.4
+priority queue for chaper 6.5
 */
 #include <stdio.h>
 #include <vector>
 #include <iostream>
+#include <limits>
+
+#define INFINITY std::numeric_limits<int>::max()
 
 using namespace std;
 
@@ -87,13 +90,49 @@ vector<int> heapSort(vector<int> &input){
     
 }
 
+class maxPriorityQueue{
+    
+public:
+    
+    vector<int> data;
+    
+    maxPriorityQueue(vector<int> input){
+        buildMaxHeap(input);
+        data = input;
+    }
+    
+    void insert (int in){
+        data.push_back(in);
+    }
+    
+    int maximum(){
+        return data[0];
+    }
+    
+    int extractMax(){
+        
+        if (data.size()==0){
+            return -INFINITY;
+        }
+        
+        int temp = data[0];
+        
+        exchange(data[0], data[data.size()-1]);
+        data.erase(data.begin() + data.size()-1);
+        maxHeapify(data, 1);
+        
+        return temp;
+        
+    }
+};
+
 int main()
 {
     vector<int> test = {1, 9, 8, 7, 6, 5, -222290, 3, 2, 0, 19999};
-    vector<int> result = heapSort (test);
+    maxPriorityQueue myQueue (test);
     
-    for (int i=0; i< result.size(); i++){
-        cout<<result[i]<<endl;
+    while (myQueue.data.size()>0){
+        cout<<myQueue.extractMax()<<endl;
     }
 
     return 0;

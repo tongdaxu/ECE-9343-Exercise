@@ -1,7 +1,9 @@
 /*
-heap and heap sort for chaper 6.1 - 6.4
-priority queue for chaper 6.5
+max heap and heap sort for chaper 6.1 - 6.4
+max priority queue for chaper 6.5
+problem set 6-1
 */
+
 #include <stdio.h>
 #include <vector>
 #include <iostream>
@@ -90,6 +92,51 @@ vector<int> heapSort(vector<int> &input){
     
 }
 
+void heapIncreaseKey(vector<int> &input, int i, int key){
+    
+    int p = parent(i) - 1;
+    i = i - 1;
+    
+    if (key < input[i]){
+        //pass
+        cout<<"new key is smaller than current"<<endl;
+        return;
+    }
+    
+    input[i] = key;
+    
+    //maxHeapify bottom up
+    //cout<<i + 1<<", "<<input[i]<<","<<input[p]<<endl;
+    
+    while (i > 0 && input[i] > input [p]){
+        
+        exchange(input[p], input[i]);
+        i = parent(i + 1) - 1;
+        p = parent(i+1) - 1;
+
+    }
+}
+
+void maxHeapInsert(vector<int> &input, int key){
+    
+    input.push_back(-INFINITY);
+    heapIncreaseKey(input, input.size(), key);
+
+}
+
+vector<int> buildMaxHeapAlter(vector<int> input){
+    
+    vector<int> result;
+    
+    while (input.size() != 1){
+        maxHeapInsert(result, input[input.size()-1]);
+        input.erase(input.begin()+ input.size() -1);
+    }
+    
+    return result;
+    
+}
+
 class maxPriorityQueue{
     
 public:
@@ -99,10 +146,6 @@ public:
     maxPriorityQueue(vector<int> input){
         buildMaxHeap(input);
         data = input;
-    }
-    
-    void insert (int in){
-        data.push_back(in);
     }
     
     int maximum(){
@@ -124,16 +167,36 @@ public:
         return temp;
         
     }
+    
+    void increaseKey(int i, int key){
+        heapIncreaseKey(data, i, key);
+    }
+    
+    void insert (int key){
+        data.push_back(-INFINITY);
+        increaseKey(data.size(), key);
+    }
+    
 };
 
 int main()
 {
     vector<int> test = {1, 9, 8, 7, 6, 5, -222290, 3, 2, 0, 19999};
     maxPriorityQueue myQueue (test);
-    
-    while (myQueue.data.size()>0){
-        cout<<myQueue.extractMax()<<endl;
-    }
 
+    vector<int> buildAlter = buildMaxHeapAlter(test);
+    
+    for(int i = 0; i<buildAlter.size(); i++){
+        cout<<buildAlter[i]<<endl;
+    }
+    
+    buildMaxHeap(test);
+
+    for(int i = 0; i<test.size(); i++){
+        cout<<test[i]<<endl;
+    }
+    
     return 0;
 }
+
+

@@ -1,7 +1,10 @@
 # Prerequisites
 *.d
 
-#.ini
+*.ini
+*.aux
+*.log
+*.gz
 
 # Compiled Object files
 *.slo

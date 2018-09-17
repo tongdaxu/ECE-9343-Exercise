@@ -96,13 +96,13 @@ For leaf $\Theta(n) = 2^h = \Theta(n^{\frac{ln2}{ln3-ln2}})$\\
 $\rightarrow T(n) = \Theta(n^{\frac{ln2}{ln3-ln2}}) = \Theta(n^{log_{\frac{3}{2}}2}) = \Theta(2^{log_{\frac{3}{2}}n})$\\
 \\
 Proof: $ T(n) = O(2^{log_{\frac{3}{2}}n} - 3n)$ \\
-Suppose $\forall k<n, \exists c_{2}, T(k) \le c_{2}k - 10\\
+Suppose $\forall k<n, \exists c_{2}, T(k) \le c_{2}2^{log_{\frac{3}{2}}n} - 3n\\
 \rightarrow T(n) = c_{2}2*2^{log_{\frac{3}{2}}\frac{2}{3}n} -4n + n \le c_{2}2^{log_{\frac{3}{2}}n} -3n\\
 \rightarrow T(n) =  O(2^{log_{\frac{3}{2}}n} -3n)\\
 \rightarrow T(n) =  O(2^{log_{\frac{3}{2}}n})\\$
 \\
 Proof: $ T(n) = \Omega(n^{log_{\frac{3}{2}}2})$ \\
-Suppose $\forall k<n, \exists c_{1}, T(k) \ge c_{1}k\\
+Suppose $\forall k<n, \exists c_{1}, T(k) \ge c_{1}n^{log_{\frac{3}{2}}2}\\
 \rightarrow T(n) = c_{1}2(\frac{2}{3}n)^{log_{\frac{3}{2}}2} + \frac{4}{3}n
  = c_{1}2*(\frac{3}{2})^{log_{\frac{3}{2}}2}*n^{log_{\frac{3}{2}}2} + \frac{4}{3}n = c_{1}n^{log_{\frac{3}{2}}2} + \frac{4}{3}n \ge c_{1}n^{log_{\frac{3}{2}}2} + n\\
 \rightarrow T(n) = \Omega(n^{log_{\frac{3}{2}}2})\\$
@@ -117,7 +117,7 @@ Proof: $T(n) = O(n^2)$, Suppose $\forall k < n, T(k) = O(k^2)\\
 \rightarrow \exists c_{2}>\frac{16}{11}, T(k) \le c_{2}n^2, T(n) \le (\frac{5}{16}c_{2} + 1)n^{2} \le c_{2}n^2, c_{2}>\frac{16}{11} \\$
 \\
 Proof: $T(n) = \Omega(n^2)$, Suppose $\forall k < n, T(k) = \Omega(k^2)\\
-\rightarrow \exists c_{1}<\frac{16}{11}, T(k) \le c_{1}n^2, T(n) \le (\frac{5}{16}c_{1} + 1)n^{2} \le c_{1}n^2, c_{1}<\frac{16}{11} \\
+\rightarrow \exists c_{1}<\frac{16}{11}, T(k) \ge c_{1}n^2, T(n) \ge (\frac{5}{16}c_{1} + 1)n^{2} \ge c_{1}n^2, c_{1}<\frac{16}{11} \\
 \rightarrow T(n) = \Theta(n^2)$\\
 
 \section{Question 8: solve}

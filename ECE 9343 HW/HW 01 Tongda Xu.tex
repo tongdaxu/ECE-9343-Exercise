@@ -36,7 +36,7 @@ $f(n) = \Theta(g(n)) \rightarrow \exists c_{1}, c_{2}, n_{0}, \forall n > n_{0},
 
 \section{Question 3: Problem 3-3-a}
 
-$2^{2^{n+1}}> 2^{2^n}> (n+1)!> n! > e^n > n2^n \\> 2^n > \frac{3}{2}^n > n^{lglgn} = lgn^{lgn}>(lgn)!> n^3 \\> n^2 = 4^{lgn} > nlgn > 2^{lgn} = n > (2^{\frac{1}{2}})^{lgn} \\>2^{(2lgn)^{1/2}} >lg^2n > lg(n!)>lnn >(lgn)^{\frac{1}{2}} >ln(lnn)\\>2^{lg^*n}> lg^* n >lg^*lgn> lglg^*n> n^{\frac{1}{lgn}} >1$
+$2^{2^{n+1}}> 2^{2^n}> (n+1)!> n! > e^n > n2^n \\> 2^n > \frac{3}{2}^n > n^{lglgn} = lgn^{lgn}>(lgn)!> n^3 \\> n^2 = 4^{lgn} >  lg(n!) = nlgn > 2^{lgn} = n >\\ (2^{\frac{1}{2}})^{lgn} >2^{(2lgn)^{1/2}} >lg^2n >lnn >(lgn)^{\frac{1}{2}} >ln(lnn) \\>2^{lg^*n}> lg^* n >lg^*lgn> lglg^*n> n^{\frac{1}{lgn}} >1$
 \\
 \\
 Some procedure:\\
@@ -59,12 +59,9 @@ $f(n) = O(g(n)) \rightarrow \exists c, n_{0}, \forall n > n_{0}, 1 \le f(n) \le 
 \rightarrow \exists c^{'}, lgc + lg(g(n)) \le c^{'} lg(g(n))\\
 \rightarrow lg(f(n)) = O(lg(g(n)))$
 \subsection{d}
-True.\\
-$
-f(n) = O(g(n)) \rightarrow \exists c, n_{0}, \forall n > n_{0}, 0 \le f(n) \le cg(n) \\
-\rightarrow 1 \le 2^{f(n)} \le 2^{cg(n)} = 2^{c}2^{g(n)} \\
-\rightarrow \exists c^{'} > 2^{c}, 2^{f(n)} \le c^{'}2^{g(n)}\\
-\rightarrow 2^{f(n)} = O(2^{g(n)})$
+False.\\
+Suppose that $f(n) = n, g(n) = \frac{1}{2}n$, never find $c, n_{0}, \forall n > n_{0}, 2^{n} \le c2^{\frac{1}{2}n}$
+
 \subsection{e}
 False, consider any $f(x), \lim_{n \rightarrow \infty} f(x) < 1$, such as $e^{-x}$
 
@@ -78,7 +75,7 @@ $
 \section{Question 5: verify}
 Proof: $ T(n) = O(n)$ \\
 Suppose $\forall k<n, \exists c_{2}, T(k) \le c_{2}k - 10\\
-\rightarrow T(n) = c_{2}\aleph n + c_{2}(1-\alpha) n - 20 + 10 \le c_{2}n - 10\\
+\rightarrow T(n) = c_{2}\alpha n + c_{2}(1-\alpha) n - 20 + 10 \le c_{2}n - 10\\
 \rightarrow T(n) = O(c_{2}n-10)\\
 \rightarrow T(n) = O(n)\\$
 \\
@@ -95,7 +92,7 @@ For branch $\Theta(n) = \sum _{1}^{h + 1} n(\frac{4}{3})^h = n\frac{(\frac{4}{3}
 For leaf $\Theta(n) = 2^h = \Theta(n^{\frac{ln2}{ln3-ln2}})$\\
 $\rightarrow T(n) = \Theta(n^{\frac{ln2}{ln3-ln2}}) = \Theta(n^{log_{\frac{3}{2}}2}) = \Theta(2^{log_{\frac{3}{2}}n})$\\
 \\
-Proof: $ T(n) = O(2^{log_{\frac{3}{2}}n} - 3n)$ \\
+Proof: $ T(n) = O(2^{log_{\frac{3}{2}}n}) - 3n$ \\
 Suppose $\forall k<n, \exists c_{2}, T(k) \le c_{2}2^{log_{\frac{3}{2}}n} - 3n\\
 \rightarrow T(n) = c_{2}2*2^{log_{\frac{3}{2}}\frac{2}{3}n} -4n + n \le c_{2}2^{log_{\frac{3}{2}}n} -3n\\
 \rightarrow T(n) =  O(2^{log_{\frac{3}{2}}n} -3n)\\
@@ -131,10 +128,10 @@ So, $S(m) = \Theta (m^{log_{6}\frac{3}{2} + 2}) \\
 \section{Question 9: solve and justify}
 \subsection{a}
 For leaf $\Theta(n) = n^{log_{3}2}$\\
-For branch, Notice that $n^{\frac{1}{2}lgn} < n^{\frac{1}{2} + \epsilon}\\
-\rightarrow T(n) < S(n) 2S(\frac{1}{3}n) + n^{\frac{1}{2} + \epsilon}$\\
-Notice that the branch complexity of $S(n) = n^{\frac{1}{2}+\epsilon} < n^{log_{3}2}$\\
-$\rightarrow T(n)$ is dominated by leaf, $T(n) = \Theta(n^{log_{3}2})$
+For branch, Notice that $n^{\frac{1}{2}} <n^{\frac{1}{2}}lgn < n^{\frac{1}{2} + \epsilon}\\
+\rightarrow 2S(\frac{1}{3}n) + n^{\frac{1}{2}} < T(n) < S(n) = 2S(\frac{1}{3}n) + n^{\frac{1}{2} + \epsilon}$\\
+Notice that the branch complexity of $\Theta(n^{log_{3}2}) \le S(n) = n^{\frac{1}{2}+\epsilon} \le \Theta(n^{log_{3}2})$\\
+$\rightarrow T(n)$ is equally dominated by branch and leaf, $T(n) = \Theta(n^{log_{3}2})$
 
 
 \subsection{b}

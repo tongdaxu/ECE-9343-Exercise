@@ -97,8 +97,9 @@ int selection(vector<int> &nums, int p, int r, int i){
         return nums[p];
     }
     
-    int q = partition(nums, p, r);
     
+    int q = partition(nums, p, r);
+
     int k = q-p+1;
     
     if(k<i){
@@ -111,15 +112,38 @@ int selection(vector<int> &nums, int p, int r, int i){
     }
 }
 
+int selectionAlter(vector<int> &nums, int p, int r, int i){
+    //Input: A set of n (distinct) numbers and an integer i
+    //Output: The element x  that is larger than exactly i - 1 other elements of A (rank of i)
+    if (p==r){
+        return nums[p];
+    }
+    //not easy to see why we use k here
+    int q = partition(nums, p, r);
+    cout<<q<<endl;
+
+    if(q<i){
+        return selection(nums, q+1, r, i);
+    }else if(q>i){
+        return selection(nums, p, q-1, i);
+    }else{
+        //q==r
+        return nums[q];
+    }
+}
+
+
 int main()
 {
-    vector<int> test = {7,6,4,8,7,9,12,5987};
+    vector<int> test = {7,6,4,8,9,12,5987};
     
     //cout<<brutualMin(test)<<endl;
     
-    int j = selection(test, 0, test.size()-1, 10);
+    int j = selectionAlter(test, 0, test.size()-1, 4);
     cout<<j;
 
     return 0;
 }
+
+
 

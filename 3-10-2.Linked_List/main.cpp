@@ -63,6 +63,20 @@ public:
         delete temp;
     }
     
+    ListNode<T>* ListSearch(T key){
+        ListNode<T>* curr = head->next;
+        
+        while (curr!= tail && curr->val != key){
+            curr = curr->next;
+        }
+        
+        if (curr == tail){
+            return NULL;
+        } else {
+            return curr;
+        }
+    }
+    
     ~LinkedList(){
         //circular or not
         while (head->next != tail && head->next != head){
@@ -75,7 +89,6 @@ public:
             delete tail;
         }
     }
-    
 };
 
 int main()
@@ -85,6 +98,10 @@ int main()
     
     myLinkedList.ListInsert(temp);
     std::cout<<myLinkedList.head->next->val<<"\n";
+    
+    ListNode<int>* result = myLinkedList.ListSearch(8);
+    std::cout<<result->val<<"\n";
+
     
     myLinkedList.ListDelete(temp);
     std::cout<<myLinkedList.head->next->val<<"\n";

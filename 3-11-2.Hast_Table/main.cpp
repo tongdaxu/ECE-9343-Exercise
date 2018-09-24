@@ -1,29 +1,76 @@
 /*
 11.1 Direct Hashing
-11.2 Hash Table
+11.2 Hash Table with LinkNode
+11.3 Hash Function
 */
 
 #include <stdio.h>
 #include <vector>
 #include <iostream>
 #include <stack>
+#include <math.h>
+#include <random>
+#define HASH 2
 
 template<class T>
 class Bucket{
 public:
+    int aRecord = -1;
+    int bRecord = -1;
     int key;
     T data;
     Bucket<T>* next = NULL;
     Bucket(){}
+    Bucket(int _key){
+        key = _key;
+        data = key;
+    }
     Bucket(int _key, T _data){
         key = _key;
         data = _data;
     }
 };
 
-int hash(int _key){
-    //This is hash function
-    int hashresult = 0;
+template<class T>
+int hash(int _key, Bucket<T>* _input = NULL){
+    int hashresult;
+    //Should be unsigned int
+    if (HASH == 0){
+        //divison method
+        hashresult = _key%9;
+    } else if (HASH == 1){
+        //multipication method, normally m = 2^n, here m = 9
+        hashresult = floor (9*((0.6180339887*_key) - floor(0.6180339887*_key)));
+    } else if (HASH == 2){
+        
+        if (_input->aRecord < 0){
+            //Random function/ Universal
+            int p = 8819; // a big prime	
+            std::random_device rd;  //Will be used to obtain a seed for the random number engine
+            std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+            std::uniform_int_distribution<> Zp(0, p-1);
+            std::uniform_int_distribution<> Zpp(1, p-1);
+            
+            int a = Zpp(gen);
+            int b = Zp(gen);
+            
+            _input->aRecord = a;
+            _input->bRecord = b;
+            
+            hashresult = ((a*_key + b)%p)%9;
+        } else {
+            
+            int a = _input->aRecord
+            int b = _input->bRecord
+            hashresult = ((a*_key + b)%p)%9;
+        }
+        
+    }else {
+        //throw a mistake
+        //p is a large enough prime number
+        throw std::out_of_range("hash function type invalid");
+    }
+    
     //hashresult = _input->key;
     return hashresult;
 }
@@ -42,10 +89,26 @@ public:
         }
     }
     
+    Table(std::vector<T> _data, int _m){
+        m = _m;
+        data.reserve(m);
+        
+        for (int i = 0; i<m; i++){
+            data.push_back(NULL);
+        }
+        
+        for (int i = 0; i<m; i++){
+            Bucket<T>* temp = new Bucket<T>(_data[i]);
+            insert(temp);
+        }
+        
+    }
+    
     Bucket<T>* search(int key){
         
-        int hVal = hash(key);
-        Bucket<T>* curr = data[hash(key)];
+        
+        int hVal = hash<T>(key);
+        Bucket<T>* curr = data[hash<T>(key)];
         // curr = head of the node, you have to traverse the list
         
         while(curr != NULL){
@@ -71,14 +134,27 @@ public:
     
     void insert(Bucket<T>* _input){
         
-        int hVal = hash(_input->key);
-        
-        if (data[hVal] == NULL){
-            data[hVal] = _input;
+        if (HASH != 2){
+            int hVal = hash<T>(_input->key);
+            
+            if (data[hVal] == NULL){
+                data[hVal] = _input;
+            } else {
+                _input->next = data[hVal];
+                data[hVal] = _input;
+            }
         } else {
-            _input->next = data[hVal];
-            data[hVal] = _input;
+            int hVal = hash<T>(_input->key, _input);
+            
+            if (data[hVal] == NULL){
+                data[hVal] = _input;
+            } else {
+                _input->next = data[hVal];
+                data[hVal] = _input;
+            }
         }
+        
+
     }
     
     void insertDirect(Bucket<T>* _input){
@@ -96,7 +172,7 @@ public:
     }
     
     void deleteHash(Bucket<T>* _input){
-        data[hash(_input->key)] = NULL;
+        data[hash<T>(_input->key)] = NULL;
     }
     
     void deleteDirect(Bucket<T>* _input){
@@ -107,15 +183,42 @@ public:
         data[_input->key] = NULL;
     }
     
+    void toString(){
+        for (int i = 0; i < data.size(); i++){
+            
+            if (data[i] == NULL){
+                std::cout<<i<<"->"<<std::endl;
+            } else {
+                std::cout<<i<<"->";
+                Bucket<T>* curr = data[i];
+                
+                while (curr != NULL){
+                    std::cout<<curr->data<<"->";
+                    curr = curr->next;
+                }
+                
+                std::cout<<std::endl;
+            }
+        }
+    }
+    
 };
 
 int main()
 {
-    Table<float> myTable(100);
-    Bucket<float>* testBucket = new Bucket<float>(44, 9.64);
-    myTable.insertDirect(testBucket);
-    Bucket<float>* result = myTable.searchDirect(44);
-    std::cout<<result->data<<"\n";
-
+    /*
+    Test case for Exercise 11.2-2
+    */
+    
+    std::vector<int> myVector = {5,28,19,15,20,33,12,17,10,2,18,23};
+    Table<int> myTable(myVector, 9);
+    myTable.toString();
+    
     return 0;
 }
+
+
+
+
+
+

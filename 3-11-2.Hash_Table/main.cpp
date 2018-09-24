@@ -3,7 +3,7 @@
 11.2 Hash Table with LinkNode
 11.3 Hash Function
 */
-
+#include <stdlib.h> 
 #include <stdio.h>
 #include <vector>
 #include <iostream>
@@ -32,7 +32,7 @@ public:
 };
 
 template<class T>
-int hash(int _key, Bucket<T>* _input = NULL){
+int hash(int _key){
     int hashresult;
     //Should be unsigned int
     if (HASH == 0){
@@ -42,28 +42,15 @@ int hash(int _key, Bucket<T>* _input = NULL){
         //multipication method, normally m = 2^n, here m = 9
         hashresult = floor (9*((0.6180339887*_key) - floor(0.6180339887*_key)));
     } else if (HASH == 2){
-        
-        if (_input->aRecord < 0){
-            //Random function/ Universal
-            int p = 8819; // a big prime	
-            std::random_device rd;  //Will be used to obtain a seed for the random number engine
-            std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-            std::uniform_int_distribution<> Zp(0, p-1);
-            std::uniform_int_distribution<> Zpp(1, p-1);
+
+            int p = 8819; // a big prime
             
-            int a = Zpp(gen);
-            int b = Zp(gen);
-            
-            _input->aRecord = a;
-            _input->bRecord = b;
+            srand (_key);
+            int a = rand() % (p-2) + 1; //a [1, p-1]
+            srand (_key*_key);
+            int b = rand() % (p-2); //b [0, p-1]
             
             hashresult = ((a*_key + b)%p)%9;
-        } else {
-            
-            int a = _input->aRecord
-            int b = _input->bRecord
-            hashresult = ((a*_key + b)%p)%9;
-        }
         
     }else {
         //throw a mistake
@@ -106,7 +93,6 @@ public:
     
     Bucket<T>* search(int key){
         
-        
         int hVal = hash<T>(key);
         Bucket<T>* curr = data[hash<T>(key)];
         // curr = head of the node, you have to traverse the list
@@ -118,7 +104,6 @@ public:
             } else {
                 curr = curr->next;
             }
-                
         }
         return curr;
     }
@@ -133,28 +118,15 @@ public:
     }
     
     void insert(Bucket<T>* _input){
-        
-        if (HASH != 2){
-            int hVal = hash<T>(_input->key);
-            
-            if (data[hVal] == NULL){
-                data[hVal] = _input;
-            } else {
-                _input->next = data[hVal];
-                data[hVal] = _input;
-            }
-        } else {
-            int hVal = hash<T>(_input->key, _input);
-            
-            if (data[hVal] == NULL){
-                data[hVal] = _input;
-            } else {
-                _input->next = data[hVal];
-                data[hVal] = _input;
-            }
-        }
-        
 
+        int hVal = hash<T>(_input->key);
+        
+        if (data[hVal] == NULL){
+            data[hVal] = _input;
+        } else {
+            _input->next = data[hVal];
+            data[hVal] = _input;
+        }
     }
     
     void insertDirect(Bucket<T>* _input){
@@ -213,9 +185,13 @@ int main()
     std::vector<int> myVector = {5,28,19,15,20,33,12,17,10,2,18,23};
     Table<int> myTable(myVector, 9);
     myTable.toString();
+    std::cout<<myTable.search(28)->data<<std::endl;
     
     return 0;
 }
+
+
+
 
 
 

@@ -241,8 +241,8 @@ public:
             return;
         } else {
             std::cout<<"->"<<_start->key<<std::endl;
-            toStringInorder(_start->left);
-            toStringInorder(_start->right);
+            toStringPreorder(_start->left);
+            toStringPreorder(_start->right);
         }
     }
     
@@ -273,6 +273,7 @@ int main()
     
     return 0;
 }
+
 
 
 

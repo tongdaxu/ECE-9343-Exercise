@@ -79,7 +79,6 @@ The time complexity is $\Theta(n)$
 	\li $- || 48 || 15 || 40 || 25 || 16 || 30$
 \end{codebox}
 
-
 \section{Question 4: CLRS Problem 2-1}
 \subsection{a. show time complexity}
 $\Theta(T) = \frac{n}{k}\Theta(n^{2}) = \Theta(nk)$
@@ -109,82 +108,21 @@ For branch (Merge), the complexity is $\Theta(nlg\frac{n}{k})$, For leaf (Insert
 		\End
 \end{codebox}
 
-\section{Question 5: verify}
-Proof: $ T(n) = O(n)$ \\
-Suppose $\forall k<n, \exists c_{2}, T(k) \le c_{2}k - 10\\
-\rightarrow T(n) = c_{2}\alpha n + c_{2}(1-\alpha) n - 20 + 10 \le c_{2}n - 10\\
-\rightarrow T(n) = O(c_{2}n-10)\\
-\rightarrow T(n) = O(n)\\$
-\\
-Proof: $ T(n) = \Omega(n)$ \\
-Suppose $\forall k<n, \exists c_{1}, T(k) \ge c_{1}k\\
-\rightarrow T(n) = c_{1}\aleph n + c_{1}(1-\alpha) n + 10 \ge c_{1}n\\
-\rightarrow T(n) = \Omega(n)\\$
-\\
-$T(n) = O(n), T(n) = \Omega(n) \rightarrow T(n) = \Theta(n)$
+\section{Question 5: CLRS Problem 6.1-3}
 
-\section{Question 6: solve and verify}
-Notice that $TreeHeight=h = log_{\frac{3}{2}}n$\\
-For branch $\Theta(n) = \sum _{1}^{h + 1} n(\frac{4}{3})^h = n\frac{(\frac{4}{3})^h - 1}{\frac{4}{3} - 1} = \Theta(n^{\frac{ln2}{ln3-ln2}})$\\
-For leaf $\Theta(n) = 2^h = \Theta(n^{\frac{ln2}{ln3-ln2}})$\\
-$\rightarrow T(n) = \Theta(n^{\frac{ln2}{ln3-ln2}}) = \Theta(n^{log_{\frac{3}{2}}2}) = \Theta(2^{log_{\frac{3}{2}}n})$\\
-\\
-Proof: $ T(n) = O(2^{log_{\frac{3}{2}}n}) - 3n$ \\
-Suppose $\forall k<n, \exists c_{2}, T(k) \le c_{2}2^{log_{\frac{3}{2}}n} - 3n\\
-\rightarrow T(n) = c_{2}2*2^{log_{\frac{3}{2}}\frac{2}{3}n} -4n + n \le c_{2}2^{log_{\frac{3}{2}}n} -3n\\
-\rightarrow T(n) =  O(2^{log_{\frac{3}{2}}n} -3n)\\
-\rightarrow T(n) =  O(2^{log_{\frac{3}{2}}n})\\$
-\\
-Proof: $ T(n) = \Omega(n^{log_{\frac{3}{2}}2})$ \\
-Suppose $\forall k<n, \exists c_{1}, T(k) \ge c_{1}n^{log_{\frac{3}{2}}2}\\
-\rightarrow T(n) = c_{1}2(\frac{2}{3}n)^{log_{\frac{3}{2}}2} + \frac{4}{3}n
- = c_{1}2*(\frac{3}{2})^{log_{\frac{3}{2}}2}*n^{log_{\frac{3}{2}}2} + \frac{4}{3}n = c_{1}n^{log_{\frac{3}{2}}2} + \frac{4}{3}n \ge c_{1}n^{log_{\frac{3}{2}}2} + n\\
-\rightarrow T(n) = \Omega(n^{log_{\frac{3}{2}}2})\\$
-\\
-$T(n) =  O(2^{log_{\frac{3}{2}}n}), T(n) = \Omega(n^{log_{\frac{3}{2}}2}) \rightarrow T(n) = \Theta(n^{log_{\frac{3}{2}}2})$
-\section{Question 7: solve and verify}
+\section{Question 6: CLRS Problem 6.2-6}
 
-Notice that for iterative tree: \\
-$\Theta (n^2) = 2T(\frac{1}{4}n) + n^2 \le T(n) \le 2T(\frac{1}{2}n) + n^2 = \Theta (n^2)\\$
-\\
-Proof: $T(n) = O(n^2)$, Suppose $\forall k < n, T(k) = O(k^2)\\
-\rightarrow \exists c_{2}>\frac{16}{11}, T(k) \le c_{2}n^2, T(n) \le (\frac{5}{16}c_{2} + 1)n^{2} \le c_{2}n^2, c_{2}>\frac{16}{11} \\$
-\\
-Proof: $T(n) = \Omega(n^2)$, Suppose $\forall k < n, T(k) = \Omega(k^2)\\
-\rightarrow \exists c_{1}<\frac{16}{11}, T(k) \ge c_{1}n^2, T(n) \ge (\frac{5}{16}c_{1} + 1)n^{2} \ge c_{1}n^2, c_{1}<\frac{16}{11} \\
-\rightarrow T(n) = \Theta(n^2)$\\
+1. Note that the height of a Heap is no more than $lg(n+\frac{1}{2}n - 1)$ in worst condition\\
+2. Note that each round of $MAX-HEAPIFY$ takes constant time\\
+4. Each time $MAX-HEAPIFY$ happen, the height of pointer $\leftarrow$ pointer- 1\\
+5. We have:\\ 
+	$$ T(h)=\left\{
+	\begin{array}{lcl}
+	c       &      & {h = 0}\\
+	T(h - 1) + c     &      & {n > 0}\\
+	\end{array} \right. $$\\
 
-\section{Question 8: solve}
-Let $n = 2^m$, Then $T(2^m) = 9T(2^{\frac{m}{6}}) + m^2\\
-\rightarrow S(m) = 9S(\frac{1}{6}m) + m^2\\$
-From Branch: $S(m) = m^{log_{6}\frac{3}{2} + 2}$\\
-From Leave: $S(m) = m^{log_{6}9}$\\
-So, $S(m) = \Theta (m^{log_{6}\frac{3}{2} + 2}) \\
-\rightarrow T(n) = T(2^m) = \Theta((lg(n))^{log_{6}\frac{3}{2} + 2})$
-
-\section{Question 9: solve and justify}
-\subsection{a}
-For leaf $\Theta(n) = n^{log_{3}2}$\\
-For branch, Notice that $n^{\frac{1}{2}} <n^{\frac{1}{2}}lgn < n^{\frac{1}{2} + \epsilon}\\
-\rightarrow 2S(\frac{1}{3}n) + n^{\frac{1}{2}} < T(n) < S(n) = 2S(\frac{1}{3}n) + n^{\frac{1}{2} + \epsilon}$\\
-Notice that the branch complexity of $\Theta(n^{log_{3}2}) \le S(n) = n^{\frac{1}{2}+\epsilon} \le \Theta(n^{log_{3}2})$\\
-$\rightarrow T(n)$ is equally dominated by branch and leaf, $T(n) = \Theta(n^{log_{3}2})$
-
-
-\subsection{b}
-For branch $T(n) = \Theta(hn^2) = \Theta(lognn^2)$\\
-For leaf $T(n) = \Theta(n^2)$\\
-$\rightarrow T(n)$ is dominated by branch, $T(n) =\Theta(lognn^2)$
-
-\subsection{c}
-For leaf $T(n) = \Theta(4^{log_{2}n}) = \Theta(n^2)$\\
-For branch, notice that $4*(\frac{1}{2})^{\frac{5}{2}} = 2^{-\frac{1}{2}} < 1, T(n) = \Theta(n^{\frac{5}{2}})$\\
-$\rightarrow T(n)$ is dominated by branch, $T(n) =\Theta(n^{\frac{5}{2}})$
-
-\subsection{d}
-For branch $TreeHeight = h = \frac{n}{2}, T(n) = \frac{1}{2}\sum_{1}^{h + 1} \frac{1}{n} = \frac{1}{2}(lnn-ln2) = \Theta(lnn)$\\
-For leaf $T(n) = \Theta(c)$\\
-$\rightarrow T(n)$ is dominated by branch, $T(n) =\Theta(lnn)$
+Solves: $T(h) = \Theta(h) = \Omega（(lg\frac{3}{2}n - 1) = \Omega (lgn)$
 
 
 \end{document}

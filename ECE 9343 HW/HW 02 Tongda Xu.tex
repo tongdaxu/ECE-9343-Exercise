@@ -1,6 +1,8 @@
 \documentclass[]{article}
 \usepackage{graphicx}
-\usepackage{clrscode}
+\usepackage{indentfirst}
+
+\usepackage{clrscode3e}
 
 %clrs code is good!
 
@@ -43,64 +45,70 @@
 
 The time complexity is $\Theta(n)$
 
-\section{Question 2: Problem 3-2}
+\section{Question 2: Intermediate Sequence}
 
-\begin{tabular}{c c c c c c c}
+\begin{codebox}
+	\Procname{$\proc{bubble sort($A$)}$}
+	\li $A = [11, 8, 7, 5, 3, 1] $
+	\li $\rightarrow [8, 11, 7, 5, 3, 1] \rightarrow [8, 7, 11, 5, 3, 1] \rightarrow [8, 7, 5, 11, 3, 1] 
+	\rightarrow [8, 7, 5, 3, 11, 1] \rightarrow [8, 7, 5, 3, 1, 11]$
+	\li $\rightarrow [7, 8, 5, 3, 1, 11] \rightarrow [7, 5, 8, 3, 1, 11] \rightarrow [7, 5, 3, 8, 1, 11]\rightarrow [7, 5, 3, 1, 8, 11]$
+	\li $\rightarrow [5, 7, 3, 1, 8, 11] \rightarrow [5, 3, 7, 1, 8, 11] \rightarrow [5, 3, 1, 7, 8, 11]$	
+	\li $\rightarrow [3, 5, 1, 7, 8, 11]\rightarrow [3, 1, 5, 7, 8, 11] $
+	\li $\rightarrow [1, 3, 5, 7, 8, 11]$
+\end{codebox}
 
-	A & B & O & o & $\Omega$ & $\omega$ & $\Theta$ \\ 
-	\hline 
-	$lg^kn$ & $n^\epsilon$ & yes & yes & no & no & no \\ 
-	\hline 
-	$n^k$ & $c^n$ & yes & yes & no & no & no \\ 
-	\hline 
-	$n^{\frac{1}{2}}$ & $n^{sinn}$ & no & no & no & no & no \\ 
-	\hline 
-	$2^{n}$ & $2^{\frac{1}{2}n}$ & no & no & yes & yes & no \\ 
-	\hline 
-	$n^{lgc}$ & $c^{lgn}$ & yes & no & yes & no & yes \\ 
-	\hline 
-	$lg(n!)$ & $lg(n^n)$ & yes & yes & no & no & no \\ 
-	
-\end{tabular} 
+\begin{codebox}
+	\Procname{$\proc{insertion sort($A$)}$}
+	\li $A = [11, 8, 7, 5, 3, 1] $
+	\li $\rightarrow [8, 11, 7, 5, 3, 1]$
+	\li $\rightarrow [8, 7, 11, 5, 3, 1] \rightarrow [7, 8, 11, 5, 3, 1]$
+	\li $\rightarrow [7, 8, 5, 11, 3, 1] \rightarrow [7, 5, 8, 11, 3, 1] \rightarrow [5, 7, 8, 11, 3, 1]$
+	\li $\rightarrow [5, 7, 8, 3, 11, 1] \rightarrow [5, 7, 3, 8, 11, 1] \rightarrow [5, 3, 7, 8, 11, 1] \rightarrow [3, 5, 7, 8, 11, 1]$
+	\li $\rightarrow [3, 5, 7, 8, 1, 11] \rightarrow [3, 5, 7, 1, 8, 11] \rightarrow [3, 5, 1, 7, 8, 11] 
+	\rightarrow [3, 1, 5, 7, 8, 11] \rightarrow [1, 3, 5, 7, 8, 11]$
+\end{codebox}
 
-\section{Question 3: Problem 3-3-a}
+\section{Question 3: Illustrate Merge Sort}
 
-$2^{2^{n+1}}> 2^{2^n}> (n+1)!> n! > e^n > n2^n \\> 2^n > \frac{3}{2}^n > n^{lglgn} = lgn^{lgn}>(lgn)!> n^3 \\> n^2 = 4^{lgn} >  lg(n!) = nlgn > 2^{lgn} = n >\\ (2^{\frac{1}{2}})^{lgn} >2^{(2lgn)^{1/2}} >lg^2n >lnn >(lgn)^{\frac{1}{2}} >ln(lnn) \\>2^{lg^*n}> lg^* n >lg^*lgn> lglg^*n> n^{\frac{1}{lgn}} >1$
-\\
-\\
-Some procedure:\\
-$n^n = 2^{nlgn} < 2^{2^{n}}\\
-((2^{1/2})^{lgn}) = n^{1/2}\\
-lg^2n = 2^{2lglgn}<2^{(2lgn)^{1/2}}<(2^{1/2})^{lgn}\\
-n^{\frac{1}{lgn}} = 2^{\frac{lgn}{lgn}} = 2\\
-4^{lgn} = n^{lg4} = n^2\\
-n^{lglgn} = lgn^{lgn} =  e^{lnnlglgn} = 2^{lgnlglgn}>2^{(2lgn)^{(1/2)}}\\
-n! > \frac{n^n}{e^n} = e^{nlnn - n} > e^{lnnlglgn}\\
-lgn! = lgn^{1/2}\frac{lgn^{lgn}}{e^{lgn}}(1+\frac{1}{n}) < (lgn)^{lgn}\\
-lnlnn = 2^{lglnlnn} > 2^{lg*n}$
+\begin{codebox}
+	\Procname{$\proc{Merge sort($A$)}$}
+	\li $15, 16, 25, 29, 30, 40, 48$
+	\li $15, 29, 48 || 16, 25, 30, 40$
+	\li $29 || 15, 48 || 25, 40 || 16, 30$
+	\li $- || 48 || 15 || 40 || 25 || 16 || 30$
+\end{codebox}
 
-\section{Question 4: Problem 3-4-c-d-e-f}
 
-\subsection{c}
-True.\\
-$f(n) = O(g(n)) \rightarrow \exists c, n_{0}, \forall n > n_{0}, 1 \le f(n) \le cg(n) \\
-\rightarrow 0 \le lg(f(n)) \le lg(cg(n)) = lgc + lg(g(n)) \\
-\rightarrow \exists c^{'}, lgc + lg(g(n)) \le c^{'} lg(g(n))\\
-\rightarrow lg(f(n)) = O(lg(g(n)))$
-\subsection{d}
-False.\\
-Suppose that $f(n) = n, g(n) = \frac{1}{2}n$, never find $c, n_{0}, \forall n > n_{0}, 2^{n} \le c2^{\frac{1}{2}n}$
+\section{Question 4: CLRS Problem 2-1}
+\subsection{a. show time complexity}
+$\Theta(T) = \frac{n}{k}\Theta(n^{2}) = \Theta(nk)$
+\subsection{b. show merge, c. show whole}
 
-\subsection{e}
-False, consider any $f(x), \lim_{n \rightarrow \infty} f(x) < 1$, such as $e^{-x}$
+There should not be anything special about Merge function, just use the original interface and implement of Merge in CLRS pp 31.\\
+$$ T(n)=\left\{
+\begin{array}{lcl}
+ n       &      & {n \le k}\\
+2T(\frac{1}{2}n) + n     &      & {n > k}\\
+\end{array} \right. $$
 
-\subsection{f}
-True.\\
-$
-f(n) = O(g(n)) \rightarrow \exists c, n_{0}, \forall n > n_{0}, 0 \le f(n) \le cg(n)\\
-\rightarrow \exists c^{'} = \frac{1}{c}, 0 \le c^{'}f(n) \le g(n)\\
-\rightarrow g(n) = \Omega (f(n))
-$
+Regarding the iterative tree, it is easy to notice that:
+For branch (Merge), the complexity is $\Theta(nlg\frac{n}{k})$, For leaf (Insertion sort), is $\Theta(nk)$
+\begin{codebox}
+	\Procname{$\proc{Merge-sort($A, p, r, k$)}$}
+	\li \If $r-p + 1 \le k$
+	\li \Then   Insertion-Sort$(A,p,r)$
+	\li 		\Return
+	\li \ElseIf $p < r$
+	\li \Then	$q = \left \lfloor (p+r)/2 \right \rfloor$
+	\li 		Merge-Sort($A, p, q$)
+	\li			Merge-Sort($A, q+1, r$)
+	\li			Merge ($A, p, q, r$)
+	\li			\Return
+	\li \Else  \Return
+		\End
+\end{codebox}
+
 \section{Question 5: verify}
 Proof: $ T(n) = O(n)$ \\
 Suppose $\forall k<n, \exists c_{2}, T(k) \le c_{2}k - 10\\

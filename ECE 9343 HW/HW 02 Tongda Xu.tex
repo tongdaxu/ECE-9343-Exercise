@@ -1,0 +1,182 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{clrscode}
+
+%clrs code is good!
+
+\title{HW02 for ECE 9343}
+\author{Tongda XU, N18100977}
+
+\begin{document}
+
+\maketitle
+
+\section{Question 1: 3-divide maximum subarray}
+
+\begin{codebox}
+	\Procname{$\proc{maxFromLeft($A, p, r$)}$}
+	\li $max = -\infty$
+	\li \For $i \gets p$ \To $r$
+	\li		\Do $max = Sum(A,p,i)>max?Sum(A,p,i):max$
+ 		\End
+	\li \Return $max$
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{maxFromRight($A, p, r$)}$}
+	\li $max = -\infty$
+	\li \For $i \gets r$ \Downto $p$
+	\li		\Do $max = Sum(A,i,r)>max?Sum(A,i,r):max$
+	\End
+	\li \Return $max$
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{THREE-FOLD-MAXSUB($A, p, r$)}$}
+	\li $s = \left \lfloor (p+r)/3 \right \rfloor$
+	\li $t = \left \lfloor (p+r)2/3 \right \rfloor$
+	\li \If $Sum(A,s,t-1) > 0$
+	\li 	\Then \Return $max(maxFromLeft(A, p, s-1), maxFromRight(A, t, r)) + Sum(A,s,t-1)$
+	\li	\Else \Return $max(maxFromLeft(A, p, s-1), maxFromRight(A, t, r))$
+	\End
+\end{codebox}
+
+The time complexity is $\Theta(n)$
+
+\section{Question 2: Problem 3-2}
+
+\begin{tabular}{c c c c c c c}
+
+	A & B & O & o & $\Omega$ & $\omega$ & $\Theta$ \\ 
+	\hline 
+	$lg^kn$ & $n^\epsilon$ & yes & yes & no & no & no \\ 
+	\hline 
+	$n^k$ & $c^n$ & yes & yes & no & no & no \\ 
+	\hline 
+	$n^{\frac{1}{2}}$ & $n^{sinn}$ & no & no & no & no & no \\ 
+	\hline 
+	$2^{n}$ & $2^{\frac{1}{2}n}$ & no & no & yes & yes & no \\ 
+	\hline 
+	$n^{lgc}$ & $c^{lgn}$ & yes & no & yes & no & yes \\ 
+	\hline 
+	$lg(n!)$ & $lg(n^n)$ & yes & yes & no & no & no \\ 
+	
+\end{tabular} 
+
+\section{Question 3: Problem 3-3-a}
+
+$2^{2^{n+1}}> 2^{2^n}> (n+1)!> n! > e^n > n2^n \\> 2^n > \frac{3}{2}^n > n^{lglgn} = lgn^{lgn}>(lgn)!> n^3 \\> n^2 = 4^{lgn} >  lg(n!) = nlgn > 2^{lgn} = n >\\ (2^{\frac{1}{2}})^{lgn} >2^{(2lgn)^{1/2}} >lg^2n >lnn >(lgn)^{\frac{1}{2}} >ln(lnn) \\>2^{lg^*n}> lg^* n >lg^*lgn> lglg^*n> n^{\frac{1}{lgn}} >1$
+\\
+\\
+Some procedure:\\
+$n^n = 2^{nlgn} < 2^{2^{n}}\\
+((2^{1/2})^{lgn}) = n^{1/2}\\
+lg^2n = 2^{2lglgn}<2^{(2lgn)^{1/2}}<(2^{1/2})^{lgn}\\
+n^{\frac{1}{lgn}} = 2^{\frac{lgn}{lgn}} = 2\\
+4^{lgn} = n^{lg4} = n^2\\
+n^{lglgn} = lgn^{lgn} =  e^{lnnlglgn} = 2^{lgnlglgn}>2^{(2lgn)^{(1/2)}}\\
+n! > \frac{n^n}{e^n} = e^{nlnn - n} > e^{lnnlglgn}\\
+lgn! = lgn^{1/2}\frac{lgn^{lgn}}{e^{lgn}}(1+\frac{1}{n}) < (lgn)^{lgn}\\
+lnlnn = 2^{lglnlnn} > 2^{lg*n}$
+
+\section{Question 4: Problem 3-4-c-d-e-f}
+
+\subsection{c}
+True.\\
+$f(n) = O(g(n)) \rightarrow \exists c, n_{0}, \forall n > n_{0}, 1 \le f(n) \le cg(n) \\
+\rightarrow 0 \le lg(f(n)) \le lg(cg(n)) = lgc + lg(g(n)) \\
+\rightarrow \exists c^{'}, lgc + lg(g(n)) \le c^{'} lg(g(n))\\
+\rightarrow lg(f(n)) = O(lg(g(n)))$
+\subsection{d}
+False.\\
+Suppose that $f(n) = n, g(n) = \frac{1}{2}n$, never find $c, n_{0}, \forall n > n_{0}, 2^{n} \le c2^{\frac{1}{2}n}$
+
+\subsection{e}
+False, consider any $f(x), \lim_{n \rightarrow \infty} f(x) < 1$, such as $e^{-x}$
+
+\subsection{f}
+True.\\
+$
+f(n) = O(g(n)) \rightarrow \exists c, n_{0}, \forall n > n_{0}, 0 \le f(n) \le cg(n)\\
+\rightarrow \exists c^{'} = \frac{1}{c}, 0 \le c^{'}f(n) \le g(n)\\
+\rightarrow g(n) = \Omega (f(n))
+$
+\section{Question 5: verify}
+Proof: $ T(n) = O(n)$ \\
+Suppose $\forall k<n, \exists c_{2}, T(k) \le c_{2}k - 10\\
+\rightarrow T(n) = c_{2}\alpha n + c_{2}(1-\alpha) n - 20 + 10 \le c_{2}n - 10\\
+\rightarrow T(n) = O(c_{2}n-10)\\
+\rightarrow T(n) = O(n)\\$
+\\
+Proof: $ T(n) = \Omega(n)$ \\
+Suppose $\forall k<n, \exists c_{1}, T(k) \ge c_{1}k\\
+\rightarrow T(n) = c_{1}\aleph n + c_{1}(1-\alpha) n + 10 \ge c_{1}n\\
+\rightarrow T(n) = \Omega(n)\\$
+\\
+$T(n) = O(n), T(n) = \Omega(n) \rightarrow T(n) = \Theta(n)$
+
+\section{Question 6: solve and verify}
+Notice that $TreeHeight=h = log_{\frac{3}{2}}n$\\
+For branch $\Theta(n) = \sum _{1}^{h + 1} n(\frac{4}{3})^h = n\frac{(\frac{4}{3})^h - 1}{\frac{4}{3} - 1} = \Theta(n^{\frac{ln2}{ln3-ln2}})$\\
+For leaf $\Theta(n) = 2^h = \Theta(n^{\frac{ln2}{ln3-ln2}})$\\
+$\rightarrow T(n) = \Theta(n^{\frac{ln2}{ln3-ln2}}) = \Theta(n^{log_{\frac{3}{2}}2}) = \Theta(2^{log_{\frac{3}{2}}n})$\\
+\\
+Proof: $ T(n) = O(2^{log_{\frac{3}{2}}n}) - 3n$ \\
+Suppose $\forall k<n, \exists c_{2}, T(k) \le c_{2}2^{log_{\frac{3}{2}}n} - 3n\\
+\rightarrow T(n) = c_{2}2*2^{log_{\frac{3}{2}}\frac{2}{3}n} -4n + n \le c_{2}2^{log_{\frac{3}{2}}n} -3n\\
+\rightarrow T(n) =  O(2^{log_{\frac{3}{2}}n} -3n)\\
+\rightarrow T(n) =  O(2^{log_{\frac{3}{2}}n})\\$
+\\
+Proof: $ T(n) = \Omega(n^{log_{\frac{3}{2}}2})$ \\
+Suppose $\forall k<n, \exists c_{1}, T(k) \ge c_{1}n^{log_{\frac{3}{2}}2}\\
+\rightarrow T(n) = c_{1}2(\frac{2}{3}n)^{log_{\frac{3}{2}}2} + \frac{4}{3}n
+ = c_{1}2*(\frac{3}{2})^{log_{\frac{3}{2}}2}*n^{log_{\frac{3}{2}}2} + \frac{4}{3}n = c_{1}n^{log_{\frac{3}{2}}2} + \frac{4}{3}n \ge c_{1}n^{log_{\frac{3}{2}}2} + n\\
+\rightarrow T(n) = \Omega(n^{log_{\frac{3}{2}}2})\\$
+\\
+$T(n) =  O(2^{log_{\frac{3}{2}}n}), T(n) = \Omega(n^{log_{\frac{3}{2}}2}) \rightarrow T(n) = \Theta(n^{log_{\frac{3}{2}}2})$
+\section{Question 7: solve and verify}
+
+Notice that for iterative tree: \\
+$\Theta (n^2) = 2T(\frac{1}{4}n) + n^2 \le T(n) \le 2T(\frac{1}{2}n) + n^2 = \Theta (n^2)\\$
+\\
+Proof: $T(n) = O(n^2)$, Suppose $\forall k < n, T(k) = O(k^2)\\
+\rightarrow \exists c_{2}>\frac{16}{11}, T(k) \le c_{2}n^2, T(n) \le (\frac{5}{16}c_{2} + 1)n^{2} \le c_{2}n^2, c_{2}>\frac{16}{11} \\$
+\\
+Proof: $T(n) = \Omega(n^2)$, Suppose $\forall k < n, T(k) = \Omega(k^2)\\
+\rightarrow \exists c_{1}<\frac{16}{11}, T(k) \ge c_{1}n^2, T(n) \ge (\frac{5}{16}c_{1} + 1)n^{2} \ge c_{1}n^2, c_{1}<\frac{16}{11} \\
+\rightarrow T(n) = \Theta(n^2)$\\
+
+\section{Question 8: solve}
+Let $n = 2^m$, Then $T(2^m) = 9T(2^{\frac{m}{6}}) + m^2\\
+\rightarrow S(m) = 9S(\frac{1}{6}m) + m^2\\$
+From Branch: $S(m) = m^{log_{6}\frac{3}{2} + 2}$\\
+From Leave: $S(m) = m^{log_{6}9}$\\
+So, $S(m) = \Theta (m^{log_{6}\frac{3}{2} + 2}) \\
+\rightarrow T(n) = T(2^m) = \Theta((lg(n))^{log_{6}\frac{3}{2} + 2})$
+
+\section{Question 9: solve and justify}
+\subsection{a}
+For leaf $\Theta(n) = n^{log_{3}2}$\\
+For branch, Notice that $n^{\frac{1}{2}} <n^{\frac{1}{2}}lgn < n^{\frac{1}{2} + \epsilon}\\
+\rightarrow 2S(\frac{1}{3}n) + n^{\frac{1}{2}} < T(n) < S(n) = 2S(\frac{1}{3}n) + n^{\frac{1}{2} + \epsilon}$\\
+Notice that the branch complexity of $\Theta(n^{log_{3}2}) \le S(n) = n^{\frac{1}{2}+\epsilon} \le \Theta(n^{log_{3}2})$\\
+$\rightarrow T(n)$ is equally dominated by branch and leaf, $T(n) = \Theta(n^{log_{3}2})$
+
+
+\subsection{b}
+For branch $T(n) = \Theta(hn^2) = \Theta(lognn^2)$\\
+For leaf $T(n) = \Theta(n^2)$\\
+$\rightarrow T(n)$ is dominated by branch, $T(n) =\Theta(lognn^2)$
+
+\subsection{c}
+For leaf $T(n) = \Theta(4^{log_{2}n}) = \Theta(n^2)$\\
+For branch, notice that $4*(\frac{1}{2})^{\frac{5}{2}} = 2^{-\frac{1}{2}} < 1, T(n) = \Theta(n^{\frac{5}{2}})$\\
+$\rightarrow T(n)$ is dominated by branch, $T(n) =\Theta(n^{\frac{5}{2}})$
+
+\subsection{d}
+For branch $TreeHeight = h = \frac{n}{2}, T(n) = \frac{1}{2}\sum_{1}^{h + 1} \frac{1}{n} = \frac{1}{2}(lnn-ln2) = \Theta(lnn)$\\
+For leaf $T(n) = \Theta(c)$\\
+$\rightarrow T(n)$ is dominated by branch, $T(n) =\Theta(lnn)$
+
+
+\end{document}

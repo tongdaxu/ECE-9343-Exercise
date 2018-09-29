@@ -139,6 +139,13 @@ public:
         }
     }
     
+    void sort(){
+        while (root != nullptr){
+            TreeNode<T>* temp = minimum(root);
+            std::cout<<temp->key<<std::endl;
+            deletion(temp);
+        }
+    }
     
     ~BRTree(){
     }
@@ -267,14 +274,14 @@ private:
     
     void deleteFix(TreeNode<T> *_x){
         
-        while (x != root && x->color == BLACK){
+        while (_x!= nullptr && _x != root && _x->color == BLACK){
             
-            if (x == x->parent->left){
+            if (_x == _x->parent->left){
                 //since x != root, this compare is safe
-                TreeNode<T> *_w = x->parent->right;
-                
-                if (_w != nullptr && w->color == RED){
-                    //case 1
+                TreeNode<T> *_w = _x->parent->right;
+                //_w is the sibling of x
+                if (_w != nullptr && _w->color == RED){
+                    //case 1, this promise _w exist
                     _w->color = BLACK;
                     _x->parent->color = RED;
                     lRotate(_x->parent);
@@ -282,26 +289,61 @@ private:
                     
                 }
                 
-                if (_w != nullptr && _w->left->color == BLACK && _w->right->color == BLACK){
-                    //case 2
+                if (_w != nullptr && (_w->left == nullptr || _w->left->color == BLACK) && (_w->right == nullptr || _w->right->color == BLACK)){
+                    //case 2, not sure how to secure w->child exist in CLRS, this seems to be dangerous
                     _w->color = RED;
                     _x = _x->parent;
-                } else if (_w != nullptr && _w->right->color == BLACK){
-                    if (_w->left->)
+                } else if (_w != nullptr && (_w->right == nullptr || _w->right->color == BLACK)){
+                    //case 3
+                    if (_w->left != nullptr){
+                        _w->left->color = BLACK;
+                    }
+                    _w->color = _x->parent->color;
+                } else {
+                    //case 4
+                    _w->color = _x->parent->color;
+                    _x->parent->color = BLACK;
+                    _w->right->color = BLACK;
+                    lRotate(_x->parent);
+                    _x = root;
+                }
+            } else {
+                //exchange left right
+                TreeNode<T> *_w = _x->parent->left;
+                //_w is the sibling of x
+                if (_w != nullptr && _w->color == RED){
+                    //case 1, this promise _w exist
+                    _w->color = BLACK;
+                    _x->parent->color = RED;
+                    rRotate(_x->parent);
+                    _w = _x->parent->left;
+                    
                 }
                 
-                
-                
+                if (_w != nullptr && (_w->left == nullptr || _w->left->color == BLACK) && (_w->right == nullptr || _w->right->color == BLACK)){
+                    //case 2, not sure how to secure w->child exist in CLRS, this seems to be dangerous
+                    _w->color = RED;
+                    _x = _x->parent;
+                } else if (_w != nullptr && (_w->left == nullptr || _w->left->color == BLACK)){
+                    //case 3
+                    if (_w->right != nullptr){
+                        _w->right->color = BLACK;
+                    }
+                    _w->color = _x->parent->color;
+                } else {
+                    //case 4
+                    _w->color = _x->parent->color;
+                    _x->parent->color = BLACK;
+                    _w->left->color = BLACK;
+                    rRotate(_x->parent);
+                    _x = root;
+                }
             }
-            
-            
-            
-            
         }
         
-        
-        
-        
+        if (_x != nullptr){
+            _x->color = BLACK;
+        }
         
     }
 
@@ -329,11 +371,13 @@ private:
 
 int main()
 {   
-    std::vector <int> test = {41, 38, 31, 12, 19, 9, 12, 17, 37, 23 ,29, 8};
+    std::vector <int> test = {41, 38, 31, 12, 19, 9, 17, 37, 23 ,29, 8};
     BRTree<int> myBRTree(test);
     myBRTree.toStringPreorder(myBRTree.root);
+    myBRTree.sort();
 
     return 0;
 }
+
 
 

@@ -3,6 +3,7 @@
 \usepackage{indentfirst}
 
 \usepackage{clrscode3e}
+\setlength{\parindent}{0pt}
 
 %clrs code is good!
 
@@ -71,6 +72,15 @@ The time complexity is $\Theta(n)$
 
 \section{Question 3: Illustrate Merge Sort}
 
+See Figure~\ref{fig:2ms}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\linewidth]{2_merge}
+	\caption{Merge Sort}
+	\label{fig:2ms}
+\end{figure}
+
 \begin{codebox}
 	\Procname{$\proc{Merge sort($A$)}$}
 	\li $15, 16, 25, 29, 30, 40, 48$
@@ -81,7 +91,7 @@ The time complexity is $\Theta(n)$
 
 \section{Question 4: CLRS Problem 2-1}
 \subsection{a. show time complexity}
-$\Theta(T) = \frac{n}{k}\Theta(n^{2}) = \Theta(nk)$
+$\Theta(T) = \frac{n}{k}\Theta(k^{2}) = \Theta(nk)$
 \subsection{b. show merge, c. show whole}
 
 There should not be anything special about Merge function, just use the original interface and implement of Merge in CLRS pp 31.\\
@@ -92,9 +102,10 @@ $$ T(n)=\left\{
 \end{array} \right. $$
 
 Regarding the iterative tree, it is easy to notice that:
-For branch (Merge), the complexity is $\Theta(nlg\frac{n}{k})$, For leaf (Insertion sort), is $\Theta(nk)$
+For branch (Merge), the complexity: $\Theta(nlg\frac{n}{k})$, For leaf (Insertion): $\Theta(nk)$, The sum is: $\Theta (nlg\frac{n}{k} + nk) $
+
 \begin{codebox}
-	\Procname{$\proc{Merge-sort($A, p, r, k$)}$}
+	\Procname{$\proc{Merge-sort-insertion($A, p, r, k$)}$}
 	\li \If $r-p + 1 \le k$
 	\li \Then   Insertion-Sort$(A,p,r)$
 	\li 		\Return
@@ -105,10 +116,22 @@ For branch (Merge), the complexity is $\Theta(nlg\frac{n}{k})$, For leaf (Insert
 	\li			Merge ($A, p, q, r$)
 	\li			\Return
 	\li \Else  \Return
-		\End
+	\End
 \end{codebox}
 
+\subsection{d. how to choose k}
+Proof:\\
+Note that in practice, we could have:\\
+$T(n,k) = c_{2} (c_{1}nk + nlg(\frac{n}{k}))\\
+\frac{\partial T(n,k)}{\partial k} = c_{2} (c_{1}n - \frac{n}{k})$\\
+$c_{1} = \frac{constant-of-insertion-sort}{constant-of-merge-sort}$, obviously<1 according to the question\\
+$k \in [0, \infty], k = \frac{1}{c_{1}} = \frac{constant-of-merge-sort}{constant-of-insertion-sort} $ could minimize T(n,k)
+
 \section{Question 5: CLRS Problem 6.1-3}
+1. Since $x.Parent.key \le x.key$, we have:\\
+When $root.child.child \neq null, root.child.key \le root.child.child.key$\\
+When $root.child.child = null$, the conclusion naturally correct\\
+2. Combined with $x.key \le x.child.key$, using deduction, it is easy to conclude that $\forall h, root.child.key \ge root.(child)^{h}.key$
 
 \section{Question 6: CLRS Problem 6.2-6}
 
@@ -124,5 +147,94 @@ For branch (Merge), the complexity is $\Theta(nlg\frac{n}{k})$, For leaf (Insert
 
 Solves: $T(h) = \Theta(h) = \Omega（(lg\frac{3}{2}n - 1) = \Omega (lgn)$
 
+\section{Question 7: Draw Heap Sort Procedure}
+
+Build max heap, See Figure~\ref{fig:2bh}\\
+heap sort, See Figure~\ref{fig:2hs}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{2_build_heap}
+	\caption{Build Heap}
+	\label{fig:2bh}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{2_heap_sort}
+	\caption{Heap Sort}
+	\label{fig:2hs}
+\end{figure}
+
+\section{Question 8: CLRS Problem 6-2}
+\subsection{a. how to present}
+Within a part of array A[1, n]\\
+get parent, Parent[i] $ = \left \lfloor i/d \right \rfloor$\\
+get (k+1)th child, $k \in [0, d-1]$ Child[i,k] $= di + k$\\
+
+\subsection{b. height}
+$h = \left \lfloor log_{d}n \right \rfloor $
+
+\subsection{c. extract max}
+
+implement of max child value and index of i in $\Theta(d)$:\\
+\begin{codebox}
+
+	\Procname{$\proc{maxChild($A, i, d$)}$}
+	\li $max = -\infty$
+	\li $maxIndex = -1$
+	\li \For $k \gets 0$ \To $d-1$
+	\li 	\Do  \If $di+k \le n=A.size()$
+	\li 	\Then $max = A[di + k]>max?A[di+k]:max$
+	\li			 $maxIndex =  A[di + k]>max?[di+k]:maxIndex$
+	\End
+	\End
+	\li \Return $max, maxIndex$
+
+\end{codebox}
+
+implement of d-maxHeapify:\\
+\begin{codebox}
+	
+	\Procname{$\proc{maxHeapify($A, i, d$)}$}
+	\li \While $i \le n = A.size()$
+	\li \Do	\If $i \le maxChild(A,i,d)[0]$
+	\li 		\Then $swap(A[i], maxChild(A,i,d)[1])$
+	\li 		  	$i = maxChild(A,i,d)[1]$
+	\End
+	\End
+	\li \Return
+\end{codebox}
+
+$ T(h)=\left\{
+\begin{array}{lcl}
+\Theta(d)       &      & {h = 0}\\
+T(h-1) + \Theta(d)     &      & {h > 0}\\
+\end{array} \right. $\\
+
+From iteration tree, it is easy to find that MaxHeapify from root for d-dimension heap cost $\Theta(dlog_{d}n)$
+	
+\begin{codebox}
+	
+	\Procname{$\proc{extractMax($A,d$)}$}
+	\li $max = A[1]$
+	\li $swap(A[1], A[n])$
+	\li $erase(A[n])$
+	\li $maxHeapify(A, 1, d)$
+	\li \Return $max$\\
+\end{codebox}
+
+Extract is simple, also cost  $\Theta(dlog_{d}n + Constant)$
+
+\section{Question 9: Visualize CLRS Problem 7-1}
+
+See Figure~\ref{fig:2hp}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{2_hpar}
+	\caption{Hoare partition}
+	\label{fig:2hp}
+\end{figure}
 
 \end{document}

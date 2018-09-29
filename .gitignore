@@ -5,6 +5,8 @@
 *.aux
 *.log
 *.gz
+*.3dmbak
+*.3dm
 
 # Compiled Object files
 *.slo

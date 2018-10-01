@@ -197,7 +197,7 @@ implement of d-maxHeapify:\\
 	
 	\Procname{$\proc{maxHeapify($A, i, d$)}$}
 	\li \While $i \le n = A.size()$
-	\li \Do	\If $i \le maxChild(A,i,d)[0]$
+	\li \Do	\If $A[i] \le maxChild(A,i,d)[0]$
 	\li 		\Then $swap(A[i], maxChild(A,i,d)[1])$
 	\li 		  	$i = maxChild(A,i,d)[1]$
 	\End

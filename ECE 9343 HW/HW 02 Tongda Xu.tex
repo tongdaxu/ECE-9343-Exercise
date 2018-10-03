@@ -22,7 +22,7 @@
 	\li \For $i \gets p$ \To $r$
 	\li		\Do $max = Sum(A,p,i)>max?Sum(A,p,i):max$
  		\End
-	\li \Return $max$
+	\li \Return $max > 0 ? max : 0$
 \end{codebox}
 
 \begin{codebox}
@@ -31,20 +31,33 @@
 	\li \For $i \gets r$ \Downto $p$
 	\li		\Do $max = Sum(A,i,r)>max?Sum(A,i,r):max$
 	\End
-	\li \Return $max$
+	\li \Return $max > 0 ? max : 0$
 \end{codebox}
 
 \begin{codebox}
-	\Procname{$\proc{THREE-FOLD-MAXSUB($A, p, r$)}$}
-	\li $s = \left \lfloor (p+r)/3 \right \rfloor$
-	\li $t = \left \lfloor (p+r)2/3 \right \rfloor$
-	\li \If $Sum(A,s,t-1) > 0$
-	\li 	\Then \Return $max(maxFromLeft(A, p, s-1), maxFromRight(A, t, r)) + Sum(A,s,t-1)$
-	\li	\Else \Return $max(maxFromLeft(A, p, s-1), maxFromRight(A, t, r))$
-	\End
+	\Procname{$\proc{3-CROSS($A, p, s, t, r$)}$}
+
+	\li \Return $max(maxFromRight(A, p, s-1) +  Sum(A,s,t-1) + maxFromLeft(A, t, r)$
 \end{codebox}
 
-The time complexity is $\Theta(n)$, since $maxFromLeft, maxFromRight, Sum$ all take $\Theta(n)$ time, but all of them are $\frac{1}{3}n$ size, the overall complexity is $\Theta(n)$
+\begin{codebox}
+	\Procname{$\proc{3-MAXSUB($A, p, r$)}$}
+	\li $s = \left \lfloor (p+r)/3 \right \rfloor$
+	\li $t = \left \lfloor (p+r)2/3 \right \rfloor$
+	\li \Return $max$(3-CROSS($A, p, s, t, r$), 3-MAXSUB($A, p, t-1$), 3-MAXSUB($A, s-1, r$))
+\end{codebox}
+
+The time complexity for 3-CROSS($A, p, s, t, r$) is $\Theta(n)$, since $maxFromLeft, maxFromRight, Sum$ all take $\Theta(n)$ time, but all of them are $\frac{1}{3}n$ size. We have a iteration tree like: 
+
+$ T(h)=\left\{
+\begin{array}{lcl}
+\Theta(1)       &      & {h = 0}\\
+2T(\frac{2}{3}n) + \Theta(n)     &      & {h > 0}\\
+\end{array} \right. $\\
+
+Note that for leaf, the complexity is : $\Theta(n^{\frac{lg2}{lg3-lg2}})$\\
+for branch, the complexity is : $\Theta(n^{\frac{lg4-lg3}{lg3-lg2}+1})$\\
+These two are equal, so the overall complexity is: $\Theta(n^{log_{\frac{3}{2}}2 })$
 
 \section{Question 2: Intermediate Sequence}
 

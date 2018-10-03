@@ -22,7 +22,7 @@
 	\li \For $i \gets p$ \To $r$
 	\li		\Do $max = Sum(A,p,i)>max?Sum(A,p,i):max$
  		\End
-	\li \Return $max > 0 ? max : 0$
+	\li \Return $max$
 \end{codebox}
 
 \begin{codebox}
@@ -31,12 +31,12 @@
 	\li \For $i \gets r$ \Downto $p$
 	\li		\Do $max = Sum(A,i,r)>max?Sum(A,i,r):max$
 	\End
-	\li \Return $max > 0 ? max : 0$
+	\li \Return $max$
 \end{codebox}
 
 \begin{codebox}
 	\Procname{$\proc{3-CROSS($A, p, s, t, r$)}$}
-	\li \Return $max(maxFromRight(A, p, s-1) +  Sum(A,s,t-1) + maxFromLeft(A, t, r)$
+	\li \Return $maxFromRight(A, p, s-1) +  Sum(A,s,t-1) + maxFromLeft(A, t, r)$
 \end{codebox}
 
 \begin{codebox}

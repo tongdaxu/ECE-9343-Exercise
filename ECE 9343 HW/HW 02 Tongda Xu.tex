@@ -92,7 +92,7 @@ See Figure~\ref{fig:2ms}
 \section{Question 4: CLRS Problem 2-1}
 \subsection{a. show time complexity}
 $\Theta(T) = \frac{n}{k}\Theta(k^{2}) = \Theta(nk)$
-\subsection{b. show merge, c. show whole}
+\subsection{b. show merge, c. show whole, max k}
 
 There should not be anything special about Merge function, just use the original interface and implement of Merge in CLRS pp 31.\\
 $$ T(n)=\left\{
@@ -118,6 +118,9 @@ For branch (Merge), the complexity: $\Theta(nlg\frac{n}{k})$, For leaf (Insertio
 	\li \Else  \Return
 	\End
 \end{codebox}
+
+Consider $\Theta (nlg\frac{n}{k} + nk) = \Theta (nlgn - nlgk + nk) = \Omega(nlgn)$, When $k = \Theta(lgn)$, it is OK.\\
+But when $k = \omega(lgn), sum = \Theta(nk) = \omega(nlgn)$, so $k_{max} = \Theta(lgn)$
 
 \subsection{d. how to choose k}
 Note that in practice, we could have:\\

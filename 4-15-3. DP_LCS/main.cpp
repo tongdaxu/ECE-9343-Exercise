@@ -188,22 +188,29 @@ int LCSRealMemory(const std::string &x, int m, const std::string &y, int n, std:
     }
 }
 
-std::string LongestIncrease(const std::string &s, int m){
+std::string LongestIncrease(const std::string &s){
     
-    if (m == 0){
-        return std::string(1, s[0]);
-    } else {
+    if (s.size() == 0){
+        return "";
+    }
+    std::vector<std::string> dp(s.size(), "");
+    std::string max = "";
+    
+    for (int i = 0; i < s.size(); i++){
+        std::string prev = "";
         
-        std::string prev = LongestIncrease(s, m-1);
-        
-        if (s[m] > prev[prev.size()-1]){
-            return prev + s[m];
-        } else {
-            return prev;
+        for (int j = 0; j < i; j++){
+            if (s[i] > s[j]){
+                prev = dp[j].size() > prev.size() ? dp[j] : prev;
+            }
         }
         
+        dp[i] = prev + s[i];
+        max = dp[i].size() > max.size() ? dp[i] : max;
     }
     
+    return max;
+
 }
     
 int main()
@@ -235,8 +242,9 @@ int main()
     
     //Exercise 15.4-5
     std::string S5 = "DABC";
-    std::cout<<LongestIncrease(S5, S5.size() - 1)<<std::endl;;
+    std::cout<<LongestIncrease(S5)<<std::endl;;
     
     return 0;
 }
+
 

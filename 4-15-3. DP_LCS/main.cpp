@@ -112,27 +112,54 @@ int LCSMemorySimple(const std::string &x, int m, const std::string &y, int n, st
     
 }
 
-int LCSMemoryMin(const std::string &x, int m, const std::string &y, int n, std::vector<std::vector<int>> &memory){
-    
+int LCSMemory2Min(const std::string &x, int m, const std::string &y, int n){
+    //Exercise 15-4.4-1, LCS in min (m,n) space complexity
     int i, j = 1;
     
-    while (i != m && j != n){
-        
-        if (i == m){
+    std::vector<int> curr(n+1, 0);
+    std::vector<int> prev(n+1, 0);
+    
+    for (int i = 1; i <= m; i++){
+        for (int j = 1; j <= n; j++){
             
-        } else if (j == )
-        
-        
-    }        
-        if (x[i] == y[j]){
-            memory[i][j] = memory[i-1][j-1] + 1;
-        } else {
-            memory[i][j] = memory[i-1][j] > memory[i][j-1] ? memory[i-1][j] : memory[i][j-1];
+            if (x[i] == y[j]){
+                curr[j] = prev[j-1] + 1;
+            } else {
+                curr[j] = prev[j] > curr[j-1] ? prev[j] : curr[j-1];
+            }
         }
+        prev = curr;
+    }
 
-    std::cout<<"LCS Length with mini step is: "<<memory[m][n]<<std::endl;
 
-    return memory[m][n];
+    std::cout<<"LCS Length with 2 mini step is: "<<curr[n]<<std::endl;
+    return curr[n];
+    
+}
+
+int LCSMemoryMin(const std::string &x, int m, const std::string &y, int n){
+    //Exercise 15-4.4-1, LCS in min (m,n) space complexity
+    int i, j = 1;
+    
+    std::vector<int> curr(n+1, 0);
+    std::vector<int> prev(n+1, 0);
+    
+    for (int i = 1; i <= m; i++){
+        for (int j = 1; j <= n; j++){
+            
+            if (x[i] == y[j]){
+                curr[j] = curr[j-1] + 1;
+            } else {
+                curr[j] = curr[j] > curr[j-1] ? curr[j] : curr[j-1];
+            }
+        }
+        //prev = curr;
+    }
+
+
+    std::cout<<"LCS Length with mini step is: "<<curr[n]<<std::endl;
+
+    return curr[n];
     
 }
 
@@ -161,6 +188,24 @@ int LCSRealMemory(const std::string &x, int m, const std::string &y, int n, std:
     }
 }
 
+std::string LongestIncrease(const std::string &s, int m){
+    
+    if (m == 0){
+        return std::string(1, s[0]);
+    } else {
+        
+        std::string prev = LongestIncrease(s, m-1);
+        
+        if (s[m] > prev[prev.size()-1]){
+            return prev + s[m];
+        } else {
+            return prev;
+        }
+        
+    }
+    
+}
+    
 int main()
 {
     std::string S1 = "ACCGGTCGAGTGCGCGGAAGCCGGCCGAA";
@@ -173,6 +218,10 @@ int main()
     LCSMemory(S1, S1.size() - 1, S2, S2.size()-1, memory, action);
     LCSMemorySimple(S1, S1.size() - 1, S2, S2.size()-1, memory);
     
+    //Exercise 15.4-4
+    LCSMemory2Min(S1, S1.size() - 1, S2, S2.size()-1);
+    LCSMemoryMin(S1, S1.size() - 1, S2, S2.size()-1);
+    
     //Exercise 15.4-1
     std::string S3 = "10010101";
     std::string S4 = "010110110";
@@ -183,7 +232,11 @@ int main()
     std::vector<std::vector<char>> actionA (S3.size(), ArowA);
     //LCSMemory(S3, S3.size() - 1, S4, S4.size()-1, memoryA, actionA);
     std::cout<<"LCS Length is: "<<LCSRealMemory(S3, S3.size() - 1, S4, S4.size()-1, memoryA)<<std::endl;
-
+    
+    //Exercise 15.4-5
+    std::string S5 = "DABC";
+    std::cout<<LongestIncrease(S5, S5.size() - 1)<<std::endl;;
+    
     return 0;
 }
 

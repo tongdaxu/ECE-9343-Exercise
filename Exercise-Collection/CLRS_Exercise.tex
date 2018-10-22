@@ -114,6 +114,10 @@ Consider a trim version of counting sort, build the $C$ map up and query directl
 	\li \Else \Return $C[b] - C[a-1]$
 \end{codebox}
 
+\subsection{8.3-2}
+Heapsort is not stable\\
+The scheme would be very similar to counting sort and takes $\Theta(n)$ time
+
 \subsection{8.3-4}
 First, with $O(n)$ time: convert n numbers $k_{10}$ into $k_{n}$ which has 3 digits.\\
 Second, with $O(d(n+n))$ time ($Lemma8.3$): Radix sort n 3-digit numbers with each digits take up to n possible values.
@@ -139,6 +143,32 @@ Second, with $O(d(n+n))$ time ($Lemma8.3$): Radix sort n 3-digit numbers with ea
 
 \section{9}
 
+\subsection{9.2-1}
+once $p == r$, the function return and recursion end.
+
+\subsection{9.2-2}
+It is because $\forall k, X_{k} = \frac{1}{n}$, giving information on which k would not effect observation
+
+\subsection{9.2-3}
+\begin{codebox}
+	\Procname{$\proc{randomized-select-iter($A,p,r,i$)}$}
+	\li \While $1$
+	\li	\Do \If $i == k$
+	\li  \Then \Return $A[i]$
+	\li \Else 
+	\li  $q =\proc{random-partition($A,p,r$)}$
+	\li 	\If $i < k$
+	\li     \Then $r = q-1$
+	\li 	\Else $p = q+1, i = i-k$
+	\End
+	\End
+	\End
+\end{codebox}
+
+\subsection{9.2-4}
+The worst case is reverse side:\\
+$pivot = {9,8,7,6,5,4,3,2,1,0}$
+
 \subsection{9.1}
 \subsubsection{a}
 
@@ -154,6 +184,49 @@ Query: calling $\proc{Extra-max($A,k$)}$ i times in worst case $O(ilgn)$
 
 Selecting: $\proc{select($A, i$)}$ in worst case $O(n)$\\
 Sorting:  $\proc{Merge-sort($A^{'}$)}$ in worst case $O(ilgi)$
+
+\subsection{9.2}
+\subsubsection{a}
+
+$\Sigma_{1}^{k-1} w_{i} = \Sigma_{1}^{k-1} \frac{1}{n} = \frac{k-1}{n} < \frac{1}{2}\\
+\Sigma_{k+1}^{n} = \frac{n-k}{n} \le \frac{1}{2}$
+
+\subsubsection{b}
+
+\begin{codebox}
+	\Procname{$\proc{weight-median($A$)}$}
+	\li w[] = \proc{Sort($A$)}.weight
+	\li n = w.length
+	\li	\For $i \gets 1$ \To $n$
+	\li 	\Do $w[i] = w[i] + w[i-1]$
+	\End
+	\li \Return \proc{Find($w[], \frac{1}{2}$)}
+\end{codebox}
+
+\subsubsection{c}
+
+\begin{codebox}
+	\Procname{$\proc{sum($w_{1}, w_{i}, lasti, lastsum$)}$}
+	\li \If $i>lasti$
+	\li  \Then \Return $lastsum + \proc{ normal-sum( $w_{lasti, i}$ ) }$
+	\li  \Else \Return $lastsum - \proc{ normal-sum( $w_{i, lasti} )$ }$ 
+	\End
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{weight-median-linear($A$)}$}
+	\li \While $1$
+	\li		\Do \If $sum[w_{1}, w_{i}, lasti, lastsum] < \frac{1}{2}, sum[w_{1}, w_{i+1}, lasti, lastsum] > \frac{1}{2}$
+	\li 		\Then \Return $i$
+ 	\li  	\Else
+ 	\li 	$lastsum = sum[w_{1}, w_{i}, lasti, lastsum], lasti = i$
+ 	\li 	\If  $sum[w_{1}, w_{i}] < \frac{1}{2}$
+ 	\li  		\Then $i = \proc{median($A,i,r$)}$
+ 	\li 	\Else $i = \proc{median($A,p,i$)}$
+ 	\End
+\end{codebox}
+
+We will experience $logn$ literation, but the load is decreasing logarithmically, so the result is linear. Notice the sum is special here, calculating the difference only.
 
 \section{11}
 

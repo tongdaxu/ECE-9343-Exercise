@@ -73,8 +73,24 @@ c       &      & {n = 1}\\
 \end{array} \right. $\\
 The $\Omega(nlgn)$ is kept even in best case.
 
+\section{8}
+\subsection{8.1-1}
+n-1 times, since we need n elements to formulate
+\subsection{8.1-2}
+$\Sigma_{1}^{n}lgk < \int_{1}^{n+1}lgkdk = (klgk - k)_{1}^{n} = (nlgn - n) - (0 - 1) = nlgn -n + 1 $
+\subsection{8.1-3}
+
+$ \leftrightarrow $ proof at least half of branch is longer than h
+\\Consider a decision tree with $n!/2$ elements
+
+$\leftrightarrow$ proof at least half of branch is longer than h
+\\Consider a decision tree with $n!/n$ elements
+
+$\leftrightarrow$ proof at least half of branch is longer than h
+\\Consider a decision tree with $n!/2^n$ elements, this is not significant enough and could leave only $\Omega (lg\frac{n!}{2^n}) = \Omega(nlgn - n) = \Omega (nlgn)$ elements
+
 \subsection{8.2-4}
-Consider a trim version of counting sort, build the $C$ map up and query directly:\\
+Consider a trim version of counting sort, build the $C$ map up and query directly:
 \begin{codebox}
 	\Procname{$\proc{Counting-sort-trim($A, k$)}$}
 	\li $C []$
@@ -121,6 +137,8 @@ Second, with $O(d(n+n))$ time ($Lemma8.3$): Radix sort n 3-digit numbers with ea
 	\li \proc{radix-sort($A,x$)}
 \end{codebox}
 
+\section{9}
+
 \subsection{9.1}
 \subsubsection{a}
 
@@ -136,6 +154,8 @@ Query: calling $\proc{Extra-max($A,k$)}$ i times in worst case $O(ilgn)$
 
 Selecting: $\proc{select($A, i$)}$ in worst case $O(n)$\\
 Sorting:  $\proc{Merge-sort($A^{'}$)}$ in worst case $O(ilgi)$
+
+\section{11}
 
 \subsection{11.2}
 \subsubsection{a}

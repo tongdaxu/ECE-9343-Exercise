@@ -228,7 +228,38 @@ $\Sigma_{1}^{k-1} w_{i} = \Sigma_{1}^{k-1} \frac{1}{n} = \frac{k-1}{n} < \frac{1
 
 We will experience $logn$ literation, but the load is decreasing logarithmically, so the result is linear. Notice the sum is special here, calculating the difference only.
 
+\subsection{9.4}
+\subsubsection{a}
+$k \le i $ or $ k \ge j: 0$\\
+$i < k < j: \frac{2}{j-i+i}$
+\subsubsection{b}
+\subsubsection{c}
+\subsubsection{d}
+
+
+
 \section{11}
+
+\subsection{11.1-2}
+Consider $vector<bool> A, a.size() = m$, just store the bool value of $key = m$ exist or not.
+
+\begin{codebox}
+	\Procname{$\proc{search($A,key$)}$}
+	\li \If $A(key)$
+	\li		\Then \Return $key$
+	\li  \Else \Return $NIL$
+	\End
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{insert($A,key$)}$}
+	\li $A(key) = 1$
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{delete($A,key$)}$}
+	\li $A(key) = 0$
+\end{codebox}
 
 \subsection{11.2}
 \subsubsection{a}

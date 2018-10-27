@@ -306,10 +306,28 @@ $2^n -1 = \Sigma_{j = 0}^{n-1} 2^j $
 Do not know how!
 
 \subsection{15.1-3}
-See Code
+\begin{codebox}
+	\Procname{$\proc{BOTTOM-UP-CUT-ROD($p, n, c$)}$}
+	\li $r[] = c$
+	\li  \For $j \gets 1$ \To $n$
+	\li    \Do \For $i \gets 1$ \To $j$ 
+	\li 		\Do $r[i] = max (p[i] + r[j-i] - c)$
+	\End
+	\End
+	\li \Return $r[n]$
+\end{codebox}
 
 \subsection{15.1-4}
-See Code
+\begin{codebox}
+	\Procname{$\proc{MEMOIZED-CUT-ROD($p, n, m, s$)}$}
+	\li \If $m[n] > -1$ 
+	\li 	\Then \Return $m[n]$ \End
+	\li  \Else
+	\li   \Then \For $i \gets 1$ \To $n$ 
+	\li     \Do $m[n] = max (p[i] + r[n-i])$
+	\li 	$s[n] = i$ \End
+	\li \Return $m[n]$
+\end{codebox}
 
 \subsection{15.1-5}
 See Code
@@ -369,6 +387,33 @@ See code
 
 \subsection{15.4-3}
 See code
+
+\subsection{15.5-1}
+A Preorder Traverse of BST
+
+\begin{codebox}
+	\Procname{$\proc{Pre-Order-Print-Aid($i,j,root$)}$}
+	\li \If $root[i,j]-1-i \ge 0$ \Then
+	\li k $root[i,root[i,j]-1]$ is the left child of k $root[i,j]$
+	\li \proc{Pre-Order-Print-Aid($i,root-1,root[i,root[i,j]-1]$)}
+	\li \Else d $i-1$ is the left child of k $root[i,j]$
+	\End
+	\li \If $j-root[i,j]-1\ge 0$ \Then
+	\li k $root[root[i,j]+1, j]$ is the right child of k $root$
+	\li \proc{Pre-Order-Print-Aid($root+1,j,root[root[i,j]+1,j]$)}
+	\li \Else d $i-1$ is the right child of $root$
+	\End
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{Pre-Order-Print($root$)}$}
+	\li k $root[1,n]$ is the root
+	\li \proc{Pre-Order-Print-Aid($1,n,root$)}
+\end{codebox}
+
+\subsection{15.5-3}
+Asymptotically there would be no change to the running time, just the constant $cn^3$ increase\\
+Time spent on $w$ would increase from $\Theta(n^2)$ to $\Theta(n^3)$
 
 \subsection{15.1}
 

@@ -432,4 +432,54 @@ Time spent on $w$ would increase from $\Theta(n^2)$ to $\Theta(n^3)$
 \subsection{15.1}
 %subpriblem? vector<string> ()
 
+\subsection{22.1-1}
+for both out-degree and in-degree $\Theta (V+E)$ time\\
+both take $\Theta (V)$ memory
+
+\subsection{22.1-2}
+
+$1 \rightarrow 2 \rightarrow 3 \rightarrow NIL$\\
+$2 \rightarrow 1 \rightarrow 4 \rightarrow 5 \rightarrow NIL$\\
+$3 \rightarrow 1 \rightarrow 6 \rightarrow 7 \rightarrow NIL$\\
+$4 \rightarrow 2 \rightarrow NIL$\\
+$5 \rightarrow 2 \rightarrow NIL$\\
+$6 \rightarrow 3 \rightarrow NIL$\\
+$7 \rightarrow 3 \rightarrow NIL$
+
+$0-1-1-0-0-0-0$\\
+$1-0-0-1-1-0-0$\\
+$1-0-0-0-0-1-1$\\
+$0-1-0-0-0-0-0$\\
+$0-1-0-0-0-0-0$\\
+$0-0-1-0-0-0-0$\\
+$0-0-1-0-0-0-0$
+
+\subsection{22.1-3}
+
+\begin{codebox}
+	\Procname{$\proc{Transpose($Adjlist$)}$}
+	\li new $AdjlistPrime$
+	\li \For each $node$ in Adjlist
+	\li		\Do \For each $subnode$ in $Adjlist(node)$
+	\li 		\Do $AdjlistPrime(subnode).insert(node)$
+	\li $Adjlist \gets AdjlistPrime$
+	\End
+\end{codebox}
+
+For adjacent list: just traverse every node and rebuild one\\
+$\Theta (E+V)$ for time and space complexity, hard to do it inplace\\
+
+\begin{codebox}
+	\Procname{$\proc{Transpose($Adjmatrix$)}$}
+	\li \For each $pair(i,j)$ in upper left Adjmatrix
+	\li		\Do \proc{Swap($Adjmatrix[i,j], Adjmatrix[j,i]$)}
+	\End
+\end{codebox}
+
+For adjacent matrix: just transpose the matrix\\
+$\Theta (V^2)$ for time and $\Theta(1)$ for space
+
+\subsection{22.1-4}
+use an adjacent matrix as aid
+
 \end{document}

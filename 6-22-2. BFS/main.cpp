@@ -130,6 +130,29 @@ public:
         }
     }
     
+    void BFSResursive(GraphNode* s){
+        resetBFS();
+        BFSResursiveAid(s, 0);
+    }
+    
+    void BFSResursiveAid (GraphNode* s, int _distance){
+        
+        s->color = grey;
+        s->distance = _distance;
+        
+        for (auto i : s->Adjlist){
+            
+            if (i->color == white){
+                i->predecessor = s;
+                s->descendant.push_back(i);
+                BFSResursiveAid(i, _distance+1);    
+            }
+        }
+        
+        s->color = black;
+        cout<<"Node value is: " <<s->value<<"; Node height is:"<<s->distance<<endl;
+    }
+    
     void printPath(GraphNode* _start, GraphNode* _end){
         if (_start == _end){
             cout <<"Node value is: "<<_end->value<<endl;
@@ -169,9 +192,12 @@ int main()
     
     myGraph.BFS(s);
     myGraph.printPath(s, y);
+    myGraph.BFSResursive(s);
+    myGraph.printPath(s, y);
     
     return 0;
 }
+
 
 
 

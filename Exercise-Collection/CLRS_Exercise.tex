@@ -482,6 +482,52 @@ $\Theta (V^2)$ for time and $\Theta(1)$ for space
 \subsection{22.1-4}
 use an adjacent matrix as aid.
 
+\subsection{22.1-5}
+
+For adjacent list, it is hard. We should regard it as a \proc{Breadth-first-search($G$)} end at $d = 2$:
+
+\begin{codebox}
+	
+	\Procname{$\proc{square($G$)}$}
+	\li \For each $u$ in $G.vertices$
+	\li 	\Do $G.reset()$
+	\li     $list = \emptyset$
+	\li 	$u.adjlist^{'} = \proc{BFS-Aid($G, u, list, 0$)}$
+	\End
+	\End
+\end{codebox}
+
+\begin{codebox}
+	
+	\Procname{$\proc{BFS-Aid($G, u, list, dist$)}$}
+	\li \For each $v$ in $u.adjlist$
+	\li 	\Do \If $v.color = white$ and $dist \le 2$ 
+	\li			\Then $list.insert(u)$
+	\li 		\proc{BFS-Aid($G, v, list, dist+1$)}
+	\End=
+	\End
+	\li \Return $list$
+\end{codebox}
+
+This could cost $\Theta(V^2 + VE)$ time and $\Theta(V+E)$ space (if optimized).\\
+
+For adjacent matrix, the square process would be simple. for each index m of matrix row, if matrix[m][n] exist, calculate bool union of matrix[m] and matrix[n]:
+
+\begin{codebox}
+	
+	\Procname{$\proc{square($G$)}$}
+	\li \For each $m$ in $G.adjMatrix$
+	\li \Do \For each $n$ $G.adjMatrix[m]$
+	\li 	\Do \If $G.adjMatrix[m][n] == 1$
+	\li         \Then $G^{'}.adjMatrix[m]$ = \proc{And($G.adjMatrix[m],G.adjMatrix[n]$)}
+	\End
+	\End
+	\End
+	\li \Return $G^{'}$
+\end{codebox}
+
+The \proc{square($G$)} cost $\Theta(V^2)$ time and $\Theta(V)$ space (if optimize)
+
 \subsection{22.2-3}
 line 2 $\rightarrow u.ifgrey = 0$\\
 line 5 $\rightarrow s.ifgrey = 1$\\
@@ -491,5 +537,116 @@ line 14 $\rightarrow v.ifgrey = 1$
 take $\Theta (V^2)$ time and $\Theta (V^2)$ space, since we need to search every column to find adjacent list.\\
 line 12 $\rightarrow \textbf{for}: each \quad v \in M[u]$\\
 line 13 $\rightarrow \textbf {if}: v == \textbf{true} \quad \textbf{and} \quad v.color == white $
+
+\subsection{22.2-5}
+
+\begin{codebox}
+	
+	\Procname{$\proc{square($AdjList$)}$}
+	\li \For each $u$ in $vertices$
+	\li		\Do \For each $v$ in $AdjList(u)$
+	\li 		\Do $AdjList(u).append(AdjList(v))$
+	\End
+	\End
+\end{codebox}
+
+For adjacent list, for each vertex u, append the adjacent list of each adjacent vertex v to adjacent list of u.\\
+$line 3$ would be execute $\Theta(E)$ times in total, 
+
+\begin{codebox}
+	\Procname{$\proc{square($Adjmatrix$)}$}
+	\li \For each $pair(i,j)$ in upper left Adjmatrix
+	\li		\Do \proc{Swap($Adjmatrix[i,j], Adjmatrix[j,i]$)}
+	\End
+\end{codebox}
+
+\subsection{Edge traverse of undirected graph}
+
+According to $Theorem 22.10$, all edges are either tree edge or back edge. Modify the \proc{DFS-Visit($G,u$)}, add a \proc{print-path($G,u$)} would do it. Assume a $root = u$ is selected:
+
+\begin{codebox}
+	
+	\Procname{$\proc{DFS-Visit($G,u$)}$}
+	\li $u.color = grey$
+	\li $dict[(Vertex,Vertex), edgeType] = \emptyset$
+	\li	\For each $v$ in $u.adjList$
+	\li \Do \If $v.color == white$
+	\li 	\Then $dict(u,v) = treeEdge$
+	\li 		  \proc{DFS-Visit($G,v$)}
+	\li 	\Else $dict(u,v) = backEgde$
+	\End
+	\End
+	\li \proc{print-path($G,u$)}
+	
+\end{codebox}
+
+\begin{codebox}
+	
+	\Procname{$\proc{print-path($G,u$)}$}
+	\li \proc{print ($"u"$)}
+	\li	\For each $v$ in $u.adjList$
+	\li \Do \If $(u,v) == treeedge$
+	\li 	\Then \proc{print ($"\rightarrow"$)}
+	\li     \proc{print-path($G,v$)}
+	\li 	\Else \proc{print ($"\rightarrow v"$)}
+	\End
+	\End
+	
+\end{codebox}
+
+line 4,6 cost same level of time as the comparison in line 3, would not change the $\Theta(V+E)$ time complexity of \proc{DFS($G$)}
+
+the print path function as:
+
+This procedure cost $\Theta(V+E)$ as well
+
+\subsection{22.2-6}
+
+Consider the following condition in Figure ~\ref{fig:22.2-6}: \\
+$E_{\pi} = <s, u1>, <u1, v1>, <s, u2>, <u2, v2>$\\
+In BFS Tree, $\delta (s, v1), \delta (s, v2) $ is either $<s, u1, v1>, <s, u1, v2>$ or $<s, u2, v1>, <s, u2, v2>$
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{2226}
+	\caption{22.2-6}
+	\label{fig:22.2-6}
+\end{figure}
+
+\subsection{22-3.12}
+
+Tweak the \proc{DFS-Visit($G,u$)} and \proc{DFS($G$)} would be enough:
+
+\begin{codebox}
+	
+	\Procname{$\proc{DFS($G$)}$}
+	\li	\For each $u$ in $G.V$
+	\li \Do $u.color = white$
+	\End
+	\li $c=1$
+	\li	\For each $u$ in $G.V$
+	\li \Do \If $u.color = white$
+	\li \Then \proc{DFS-Visit($G,u,c$)}
+	\li $c$++
+	\End
+	\End
+	
+\end{codebox}
+
+\begin{codebox}
+	
+	\Procname{$\proc{DFS-Visit($G,u,c$)}$}
+	\li $u.color = grey$
+	\li $u.cc = c$
+	\li	\For each $v$ in $u.adjList$
+	\li \Do \If $v.color == white$
+	\li 	\Then \proc{DFS-Visit($G,v$)}
+	\End
+	\End
+	
+\end{codebox}
+
+\proc{DFS($G$)} could be tweaked to do it as well
+
 
 \end{document}

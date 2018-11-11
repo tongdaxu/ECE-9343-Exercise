@@ -526,7 +526,7 @@ For adjacent matrix, the square process would be simple. for each index m of mat
 	\li \Return $G^{'}$
 \end{codebox}
 
-The \proc{square($G$)} cost $\Theta(V^2)$ time and $\Theta(V)$ space (if optimize)
+The \proc{square($G$)} cost $\Theta(V^3)$ time and $\Theta(V)$ space (if optimize)
 
 \subsection{22.2-3}
 line 2 $\rightarrow u.ifgrey = 0$\\
@@ -648,5 +648,42 @@ Tweak the \proc{DFS-Visit($G,u$)} and \proc{DFS($G$)} would be enough:
 
 \proc{DFS($G$)} could be tweaked to do it as well
 
+\subsection{22.4-1}
+
+$ p[27:28] \rightarrow n[21:26] \rightarrow o[22:25] \rightarrow s[23:24] \rightarrow\\
+ m[1:20] \rightarrow r[6:19] \rightarrow y[9:18] \rightarrow v[10:17] \rightarrow x[15:16] \rightarrow \\
+w[11:14] \rightarrow z[12:13] \rightarrow u[7:8] \rightarrow q[2:5] \rightarrow t[3:4]$
+
+\subsection{22.4-3}
+A \proc{DFS($G$)}/\proc{BFS($G$)} returns false when a back edge is found, easy to proof it is $\Theta (V)$
+
+\subsection{22.1}
+\subsubsection{a-1}
+
+Suppose $(v,u)$ is a backedge. u is ancestor elder than parent of v. This means $(s,u)$ + forwardEdge is shorter than $(s,v)$ produced by BFS which is $\delta(s,v)$ by \textbf{Theorem 22.5}. Same reason for forward edge.   
+
+\subsubsection{a-2}
+
+By \textbf{Theorem 22.5} $\delta(s,u) = u.d = u.level$ and $\delta(s,v) = v.d =v v.level$, so $v.d = u.d+1$
+
+\subsubsection{a-3}
+
+Same as a-1, if $v.d > u.d + 1$, $\delta(s,v) = (s,u) + cross$ instead of $(s,v)$. if $v.d < u.d$
+
+\subsubsection{b-1}
+
+Same as a-1, the $(s, u) + backEdge$ would be shorter than $(s, v)$
+
+\subsubsection{b-2}
+
+By \textbf{Theorem 22.5} $\delta(s,u) = u.d = u.level$ and $\delta(s,v) = v.d =v v.level$, so $v.d = u.d+1$
+
+\subsubsection{b-3}
+
+Still consider that BFS always generate shortest path. $\delta(s,u) + 1 < (s,v)$ is not allowed
+
+\subsubsection{b-4}
+
+By \textbf{Corollary 22.4} we know that $parenr.d \le child.d$, so for backedge $v.d \le u.d$
 
 \end{document}

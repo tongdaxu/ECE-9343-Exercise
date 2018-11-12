@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <utility>      
+#include <map>
 
 using namespace std;
 
@@ -66,9 +67,39 @@ public:
         
     }
     
+    void transpose (){
+        
+    //Exercise 22.1-3
+        
+        list<GraphNode*> init= {};
+        map <GraphNode*, list<GraphNode*>> newAdjlist;
+        for (auto i : Vertex){
+            newAdjlist[i] = {};
+        }
+        
+        for (auto i : Vertex){
+            for (auto j : i->Adjlist){
+             (newAdjlist[j]).push_back(i);   
+            }
+        }
+        
+        for (auto i : Vertex){
+            i->Adjlist = newAdjlist[i]; 
+        }
+        
+    }
+    
     void toString(){
         for (auto i : Vertex){
-            cout<< i->value <<endl;
+            
+            cout<<i->value<<"->";
+            
+            for (auto j : i->Adjlist){
+                cout<<j->value<<"->";
+            }
+            
+            cout<<endl;
+            
         }
     }
     
@@ -82,20 +113,27 @@ private:
 
 int main()
 {
-    GraphNode* node1 = new GraphNode (1);
-    GraphNode* node2 = new GraphNode (2);
-    GraphNode* node3 = new GraphNode (3);
-    GraphNode* node4 = new GraphNode (4);
-    GraphNode* node5 = new GraphNode (5);
-    GraphNode* node6 = new GraphNode (6);
+    
+    GraphNode* r = new GraphNode (18);
+    GraphNode* s = new GraphNode (19);
+    GraphNode* t = new GraphNode (20);
+    GraphNode* u = new GraphNode (21);
+    GraphNode* v = new GraphNode (22);
+    GraphNode* w = new GraphNode (23);
+    GraphNode* x = new GraphNode (24);
+    GraphNode* y = new GraphNode (25);
+    
+    Graph myGraph ({r,s,t,u,v,w,x,y}, 
+                   {{r, s}, {r, v}, {s, w}, {t, w}, {t, x}, {t, u}, {u, x}, {w, x}, {x,y}});
 
-    Graph myGraph ({node1, node2, node3, node4, node5, node6}, 
-                   {{node1, node2}, {node1, node4}, {node2, node5}, {node3, node5}, {node4, node2}, {node5, node4}, {node6, node6}});
+    myGraph.toString();
+    myGraph.transpose();
+    cout<<"transpose"<<endl;
     
     myGraph.toString();
     
-    printf("Hello World");
-
     return 0;
 }
+
+
 

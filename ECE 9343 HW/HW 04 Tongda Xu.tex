@@ -219,8 +219,7 @@ Only the first half of a-3. if $v.d > u.d + 1$, $\delta(s,v) = (s,u) + cross$ in
 
 By \textbf{Corollary 22.4} and By \textbf{Theorem 22.5}, we know that if v is an ancestor of u $\delta (s, u) = \delta(s, v) + k \rightarrow \delta(s, u) > \delta (s, v) \rightarrow u.d > v.d$, I did not see how $u.d = v.d$ but the statement is correct.
 
-\section{Question 8: CLRS Problem Set 22.3}
-
+\section{Question 9: CLRS Problem Set 22.3}
 
 \subsection{1. proof}
 
@@ -268,5 +267,39 @@ This is very similar to SCC, we find closed cycle first then join them with othe
 \end{codebox}
 
 It is easy to find that as we remove an edge from adjacent list once we find it, and we traverse every edge, the time complexity would be $\Theta(E)$
+
+\section{Question 10: CLRS Exercise 12.2-1}
+a. impossible since $\{330,344,397,363\}$ should be in left sub tree of node $338$\\
+b. possible\\
+c. impossible since$\{912, 245,363\}$ should be in left sub tree of node $911$\\
+d. possible\\
+e. impossible since $\{299, 392, 358, 363\}$ should be in right sub tree of node $347$
+
+\section{Question 11: CLRS Exercise 12.2-5}
+For successor: \textbf{if node X's right child has no left child}: then the successor would be X's right child which has no left child. \textbf{If node X's right child has left child}: then the successor would be the minimum element in the left sub tree of X's right child, which could not have left child or its left child would be less than it self.\\
+For predecessor: same as successor.
+
+\section{Question 12: CLRS Exercise 12.3-3}
+Best case: $\Theta (nlogn)$ Consider a sorted sequence Each time we insert the median and slice into before median and after median, and do the same process recursively.\\ 
+Worst cast: $\Theta(n^2)$ Consider constantly insert element at the end of a $List$. This could happen when we insert the $in-order$ traverse sequence either in an increase or decrease order. 
+
+\section{Question 13: CLRS Exercise 12.3-3}
+
+\subsection{a}
+The value would be $\{16, 23, 7, 20\}$
+
+\subsection{b}
+For insertion, only one rotation would be triggered
+
+\subsection{c}
+See Figure~\ref{fig:hw04Ex13}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{hw04Ex13}
+	\caption{22.2-6}
+	\label{fig:hw04Ex13}
+\end{figure}
+
 
 \end{document}

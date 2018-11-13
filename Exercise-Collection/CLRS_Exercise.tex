@@ -664,11 +664,12 @@ Suppose $(v,u)$ is a backedge. u is ancestor elder than parent of v. This means 
 
 \subsubsection{a-2}
 
-By \textbf{Theorem 22.5} $\delta(s,u) = u.d = u.level$ and $\delta(s,v) = v.d =v v.level$, so $v.d = u.d+1$
+By \textbf{Theorem 22.5} $\delta(s,v) = \delta(s,v.parent) + (v.parent, v) = \delta(s,u) + (u,v) \rightarrow v.d = u.d + 1$
 
 \subsubsection{a-3}
 
-Same as a-1, if $v.d > u.d + 1$, $\delta(s,v) = (s,u) + cross$ instead of $(s,v)$. if $v.d < u.d$
+$v.d \le u.d + 1$ : Same as a-1, if $v.d > u.d + 1$, $\delta(s,v) = (s,u) + cross$ instead of $(s,v)$. \\
+$v.d \ge u.d$: If $v.d < u.d$, $(v,u)$ should be find out first, since this is undirected graph. 
 
 \subsubsection{b-1}
 
@@ -676,14 +677,62 @@ Same as a-1, the $(s, u) + backEdge$ would be shorter than $(s, v)$
 
 \subsubsection{b-2}
 
-By \textbf{Theorem 22.5} $\delta(s,u) = u.d = u.level$ and $\delta(s,v) = v.d =v v.level$, so $v.d = u.d+1$
+Same as a-2, By \textbf{Theorem 22.5} $\delta(s,v) = \delta(s,v.parent) + (v.parent, v) = \delta(s,u) + (u,v) \rightarrow v.d = u.d + 1$
 
 \subsubsection{b-3}
 
-Still consider that BFS always generate shortest path. $\delta(s,u) + 1 < (s,v)$ is not allowed
-
+Only the first half of a-3. if $v.d > u.d + 1$, $\delta(s,v) = (s,u) + cross$ instead of $(s,v)$. 
 \subsubsection{b-4}
 
-By \textbf{Corollary 22.4} we know that $parenr.d \le child.d$, so for backedge $v.d \le u.d$
+By \textbf{Corollary 22.4} and By \textbf{Theorem 22.5}, we know that if v is an ancestor of u $\delta (s, u) = \delta(s, v) + k \rightarrow \delta(s, u) > \delta (s, v) \rightarrow u.d > v.d$, I did not see how $u.d = v.d$ but the statement is correct.
+
+\subsection{22.3}
+
+\subsubsection{1. proof}
+
+Euler tour exist $\rightarrow$ in-degree == out-degree: Suppose the cycle through i vertex n times would be $E-cycle = \{ v_{i}, v_{j}, v_{k}, ... , v_{i} \}$. The in-degree of $v_{j}$ would be the time of  $v_{j}$ appears with element in front, and out-degree of $v_{j}$ would be the time of $v_{j}$ appears with element in the back. If $v_{j}$ is not head or tail, this is obvious that every time $v_{j}$ appear, there is element in front and tail. If $v_{j}$ is head, it must also be tail, which balance the in-degree and out-degree again.\\
+
+in-degree == out-degree $\rightarrow$ Euler tour exist
+
+\subsubsection{2. implement}
+
+This is very similar to SCC, we find closed cycle first then join them with other edge set. This procedure would return a cycle, which is a list of vertex. closed cycle has $cycle.begin() = cycle.end()$, open cycle(path, not a cycle) do not has it. But if Euler tour exist, open cycle would join close cycle into a big cycle.
+
+\begin{codebox}
+	
+	\Procname{$\proc{CircleFind($cycle,u,v$)}$}
+	\li $ClosedCycleSet, OpenCycleSet = \emptyset$
+	\li \While $all adjList != \emptyset$ \Do
+	\li \For $v$ in $Vertex$ with $adjList != \emptyset$\Do
+	\li \If $v.adjList != \emptyset$ \Then
+	\li new $cycle = \emptyset$
+	\li \proc{CircleFindAid($cycle,u,NIL$)}
+	\li \If $cycle.type == closed$
+	\li \Then $ClosedCycleSet.push(cycle)$
+	\li \Else $OpenCycleSet.push(cycle)$
+	
+\end{codebox}
+
+\begin{codebox}
+	
+	\Procname{$\proc{CircleFindAid($cycle,u,v$)}$}
+	\li $cycle.insert(u)$
+	\li \If $v != NIL$ 
+	\li \Then $v.adjList.erase(u)$ \End
+	\li \If $u == NIL$ 
+	\li \Then $cycle.type = open$
+	\li \Return  
+	\li \ElseIf $u == cycle.start$ 
+	\li \Then $cycle.type = close$
+	\li \Return 
+	\li \Else $v = u$
+	\li $u = u.adjList.begin()$
+	\li \proc{CircleFind(cycle, u, v)}
+	\End
+	\End
+	
+\end{codebox}
+
+It is easy to find that as we remove an edge from adjacent list once we find it, and we traverse every edge, the time complexity would be $\Theta(E)$
 
 \end{document}

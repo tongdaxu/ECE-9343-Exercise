@@ -2,6 +2,8 @@
 \usepackage{graphicx}
 \usepackage{indentfirst}
 \usepackage{clrscode3e}
+\usepackage{amsmath}
+
 \setlength{\parindent}{0pt}
 %opening
 \title{CLRS Exercise}
@@ -10,7 +12,13 @@
 \begin{document}
 
 \maketitle
-\section{7}
+\section{The Role of Algorithms in Computing}
+\section{Getting Started}
+\section{Growth of Functions}
+\section{Divide-and-Conquer}
+\section{Probabilistic Analysis and Randomized Algorithms}
+\section{Heapsort}
+\section{Quicksort}
 \subsection{7.3}
 \subsubsection{a}
 This is certain concerning the $Randomized$ procedure, the probability of any index $i$ is chosen from $[0,n-1]$is:\\
@@ -73,7 +81,7 @@ c       &      & {n = 1}\\
 \end{array} \right. $\\
 The $\Omega(nlgn)$ is kept even in best case.
 
-\section{8}
+\section{Sorting in Linear Time}
 \subsection{8.1-1}
 n-1 times, since we need n elements to formulate
 \subsection{8.1-2}
@@ -141,7 +149,7 @@ Second, with $O(d(n+n))$ time ($Lemma8.3$): Radix sort n 3-digit numbers with ea
 	\li \proc{radix-sort($A,x$)}
 \end{codebox}
 
-\section{9}
+\section{Medians and Order Statistics}
 
 \subsection{9.2-1}
 once $p == r$, the function return and recursion end.
@@ -236,9 +244,9 @@ $i < k < j: \frac{2}{j-i+i}$
 \subsubsection{c}
 \subsubsection{d}
 
+\section{Elementary Data Structures}
 
-
-\section{11}
+\section{Hash Tables}
 
 \subsection{11.1-2}
 Consider $vector<bool> A, a.size() = m$, just store the bool value of $key = m$ exist or not.
@@ -298,7 +306,11 @@ $E(M) = \Sigma_{M = 1}^{n} M Pr(M) < MPr(M>\frac{clgn}{lglgn}) + \frac{clgn}{lgl
 \le \int_{\frac{clgn}{lglgn}}^{\infty}\frac{1}{n}dn + 1*\frac{clgn}{lglgn} \\
 = lg (\frac{clgn}{lglgn}) + \frac{clgn}{lglgn}\\ = O(\frac{clgn}{lglgn})$
 
-\section{15}
+\section{Binary Search Trees}
+\section{Red-Black Trees}
+\section{Augmenting Data Structures}
+
+\section{Dynamic Programming}
 
 \subsection{15.1-1}
 $2^n -1 = \Sigma_{j = 0}^{n-1} 2^j $
@@ -311,7 +323,7 @@ Do not know how!
 	\li $r[] = c$
 	\li  \For $j \gets 1$ \To $n$
 	\li    \Do \For $i \gets 1$ \To $j$ 
-	\li 		\Do $r[i] = max (p[i] + r[j-i] - c)$
+	\li 		\Do $r[i] \leftarrow max (p[i] + r[j-i] - c)$
 	\End
 	\End
 	\li \Return $r[n]$
@@ -323,9 +335,9 @@ Do not know how!
 	\li \If $m[n] > -1$ 
 	\li 	\Then \Return $m[n]$ \End
 	\li  \Else
-	\li   \Then \For $i \gets 1$ \To $n$ 
-	\li     \Do $m[n] = max (p[i] + r[n-i])$
-	\li 	$s[n] = i$ \End
+	\li   \Then \For $i \leftarrow 1$ \To $n$ 
+	\li     \Do $m[n] \leftarrow max (p[i] + r[n-i])$
+	\li 	$s[n] \leftarrow i$ \End
 	\li \Return $m[n]$
 \end{codebox}
 
@@ -386,7 +398,50 @@ See code
 See code
 
 \subsection{15.4-3}
-See code
+\begin{codebox}
+	\Procname{$\proc{LCS($X,Y$)}$}
+	\li $DP \leftarrow [][]$
+	\li \Return $\proc{LSC-Aid($X.length, Y.length$)}$
+	
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{LSC-Aid($i,j$)}$}
+	\li \If $i = 0$ or $j = 0$ 
+	\li \Then $DP[i][j] \leftarrow 0$
+	\li \Else 
+	\li \If $X[i] = Y[j]$
+	\li \Then \If $DP[i-1][j-1] = NIL$
+	\li \Then $DP[i-1][j-1] = \proc{LSC-Aid($i-1,j-1$)}$ \End
+	\li $DP[i][j] \leftarrow DP[i-1][j-1] + 1$
+	\li \Else 
+	\li \If $DP[i-1][j] = NIL$
+	\li \Then $DP[i-1][j] = \proc{LSC-Aid($i-1,j$)}$ \End
+	\li \If $DP[i][j-1] = NIL$
+	\li \Then $DP[i][j-1] = \proc{LSC-Aid($i,j-1$)}$ \End
+	\li $DP[i][j] = max \{DP[i][j-1], DP[i-1][j]\}$ \End \End
+	\li \Return $DP[i][j]$
+
+	
+\end{codebox}
+
+\subsection{15.4-5}
+
+This is easy to construct from bottom to top, and straightforward to see a time complexity of $\Theta (n^2)$:
+
+\begin{codebox}
+	\Procname{$\proc{Longest-Mono-Increase($s$)}$}
+	\li $DP \leftarrow [][]$
+	\li $DP[1] \leftarrow s[1]$
+	\li \For $i \leftarrow 1 $ \To $n$ 
+	\li \Do \For $j \leftarrow i-1 $ \Downto 1
+	\li \Do \If $DP[j].end < s[i]$
+	\li \Then $DP[i] \leftarrow DP[i].length < DP[j].length + 1 ? DP[j] + s[i] : DP[i]$
+	\li \Else $DP[i] \leftarrow DP[i].length < DP[j].length ? DP[j] : DP[i]$
+    \End \End \End
+	\li \Return $DP[s.length]$
+
+\end{codebox}
 
 \subsection{15.5-1}
 A Preorder Traverse of BST
@@ -417,20 +472,62 @@ Time spent on $w$ would increase from $\Theta(n^2)$ to $\Theta(n^3)$
 
 \subsection{15.1}
 
+It is easy to implement a memorized recursive algorithm, but very hard to build from down to top:
+
 \begin{codebox}
-	\Procname{$\proc{LSP($s, t, G$)}$}
-	\li $r = G,size()$
-	\li $DPs[r] = 0$
-	\li $DPr[r] = path(s,t)$
-	\li $max = -\infty$
-	\li \For $i \gets 1$ \To $r$
-	\li		\Do $max (DPs[j] + DPr[r-j] + what)$
-	\End
-	\li \Return $max$
+	\Procname{$\proc{Longest-simple-path($s,t$)}$}
+	\li $DP[] \leftarrow -1$
+	\li \Return \proc{Longest-simple-path-aid($s,t$)}
 \end{codebox}
 
-\subsection{15.1}
-%subpriblem? vector<string> ()
+\begin{codebox}
+	\Procname{$\proc{Longest-simple-path-aid($s,t$)}$}
+	\li \If $s \neq t$
+	\li \Then \If $DP[s] = -1$
+	\li \Then $DP[s] \leftarrow \underset {v \in s.adjList}{\max} \{ \proc{weight($s,v$)}+\proc{Longest-simple-path-aid($v,t$)}\} $
+	\End
+	\li \Return $DP[s]$
+	\li \Else \Return 0
+	\End
+\end{codebox}
+
+the $DP[s]$ is a array with length V, all overlapping subproblem is solved by memory, so $DP[s]$ cost $\Theta(V)$ time to construct. In each query, it cost $s.adjList.length()$ time, and in total it cost $O(E)$ time. So Longest-simple-path cost $O(E+V)$ time to compute.
+
+
+\section{Greedy Algorithms}
+\subsection{16.1-1}
+
+This process fill a grid of $\frac{1}{2}n^2$ and take space and time of $\Theta(n^2)$. Greedy is one-pass and take only $\Theta(n)$.
+
+\begin{codebox}
+	\Procname{$\proc{AS-Adi($a$)}$}
+	\li $DP = [][]$
+	\li \Return \proc{AS-Adi($0,a.length$)}
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{AS-Adi($i,j$)}$}
+	\li \For $m \leftarrow j-1$ \Downto $i+1$
+	\li \Do \If $a[m].f \le a[j].s$ and $a[m].s \ge a[i].f$
+	\li \Then $S[i][j].push(a[m])$ \End \End
+	\li \If $S[i][j] = \emptyset$ 
+	\li \Then $DP[i][j] \leftarrow 0$
+	\li \Else 
+	\li \If $DP[i][j] = NIL$
+	\li \Then $DP[i][j] \leftarrow \underset{a[k] \in S[i][j]}{\max} \{\proc{AS-Adi($i,k$)} + 1 + \proc{AS-Adi($k,j$)} \} $ \End \End
+	\li \Return $DP[i][j]$
+	
+\end{codebox}
+
+It is easy to find that as we remove an edge from adjacent list once we find it, and we traverse every edge, the time complexity would be $\Theta(E)$
+
+\section{Amortized Analysis}
+\section{B-Trees}
+\section{Fibonacci Heaps}
+\section{van Emde Boas Trees}
+\section{Data Structures for Disjoint Sets}
+
+\section{Elementary Graph Algorithms}
 
 \subsection{22.1-1}
 for both out-degree and in-degree $\Theta (V+E)$ time\\
@@ -733,6 +830,5 @@ This is very similar to SCC, we find closed cycle first then join them with othe
 	
 \end{codebox}
 
-It is easy to find that as we remove an edge from adjacent list once we find it, and we traverse every edge, the time complexity would be $\Theta(E)$
 
 \end{document}

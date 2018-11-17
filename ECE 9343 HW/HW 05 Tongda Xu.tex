@@ -1,0 +1,136 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{clrscode3e}
+\setlength{\parindent}{0pt}
+
+%clrs code is good!
+
+\title{HW05 for ECE 9343}
+\author{Tongda XU, N18100977}
+
+\begin{document}
+
+\maketitle
+
+\section{Question 1: CLRS Exercise 15.1-3}
+
+\begin{codebox}
+	\Procname{$\proc{BOTTOM-UP-CUT-ROD($p, n, c$)}$}
+	\li $r[] = c$
+	\li  \For $j \gets 1$ \To $n$
+	\li    \Do \For $i \gets 1$ \To $j$ 
+	\li 		\Do $r[i] \leftarrow max (p[i] + r[j-i] - c)$
+	\End
+	\End
+	\li \Return $r[n]$
+\end{codebox}
+
+\section{Question 2: CLRS Exercise 15.1-4}
+
+\begin{codebox}
+	\Procname{$\proc{MEMOIZED-CUT-ROD($p, n, m, s$)}$}
+	\li \If $m[n] > -1$ 
+	\li 	\Then \Return $m[n]$ \End
+	\li  \Else
+	\li   \Then \For $i \leftarrow 1$ \To $n$ 
+	\li     \Do $m[n] \leftarrow max (p[i] + r[n-i])$
+	\li 	$s[n] \leftarrow i$ \End
+	\li \Return $m[n]$
+\end{codebox}
+
+\section{Question 3: CLRS Exercise 15.4-3}
+
+\begin{codebox}
+	\Procname{$\proc{LCS($X,Y$)}$}
+	\li $DP \leftarrow [][]$
+	\li \Return $\proc{LSC-Aid($X.length, Y.length$)}$
+	
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{LSC-Aid($i,j$)}$}
+	\li \If $i = 0$ or $j = 0$ 
+	\li \Then $DP[i][j] \leftarrow 0$
+	\li \Else 
+	\li \If $X[i] = Y[j]$
+	\li \Then \If $DP[i-1][j-1] = NIL$
+	\li \Then $DP[i-1][j-1] = \proc{LSC-Aid($i-1,j-1$)}$ \End
+	\li $DP[i][j] \leftarrow DP[i-1][j-1] + 1$
+	\li \Else 
+	\li \If $DP[i-1][j] = NIL$
+	\li \Then $DP[i-1][j] = \proc{LSC-Aid($i-1,j$)}$ \End
+	\li \If $DP[i][j-1] = NIL$
+	\li \Then $DP[i][j-1] = \proc{LSC-Aid($i,j-1$)}$ \End
+	\li $DP[i][j] = max \{DP[i][j-1], DP[i-1][j]\}$ \End \End
+	\li \Return $DP[i][j]$
+	
+\end{codebox}
+
+\section{Question 4: CLRS Exercise 15.4-5}
+
+This is easy to construct from bottom to top, and straightforward to see a time complexity of $\Theta (n^2)$:
+
+\begin{codebox}
+	\Procname{$\proc{Longest-Mono-Increase($s$)}$}
+	\li $DP \leftarrow [][]$
+	\li $DP[1] \leftarrow s[1]$
+	\li \For $i \leftarrow 1 $ \To $n$ 
+	\li \Do \For $j \leftarrow i-1 $ \Downto 1
+	\li \Do \If $DP[j].end < s[i]$
+	\li \Then $DP[i] \leftarrow DP[i].length < DP[j].length + 1 ? DP[j] + s[i] : DP[i]$
+	\li \Else $DP[i] \leftarrow DP[i].length < DP[j].length ? DP[j] : DP[i]$
+	\End \End \End
+	\li \Return $DP[s.length]$
+	
+\end{codebox}
+
+\section{Question 5: CLRS Exercise 15.1}
+
+It is easy to implement a memorized recursive algorithm, but very hard to build from down to top:
+
+\begin{codebox}
+	\Procname{$\proc{Longest-simple-path($s,t$)}$}
+	\li $DP[] \leftarrow -1$
+	\li \Return \proc{Longest-simple-path-aid($s,t$)}
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{Longest-simple-path-aid($s,t$)}$}
+	\li \If $s \neq t$
+	\li \Then \If $DP[s] = -1$
+	\li \Then $DP[s] \leftarrow \underset {v \in s.adjList}{\max} \{ \proc{weight($s,v$)}+\proc{Longest-simple-path-aid($v,t$)}\} $
+	\End
+	\li \Return $DP[s]$
+	\li \Else \Return 0
+	\End
+\end{codebox}
+
+the $DP[s]$ is a array with length V, all overlapping subproblem is solved by memory, so $DP[s]$ cost $\Theta(V)$ time to construct. In each query, it cost $s.adjList.length()$ time, and in total it cost $O(E)$ time. So Longest-simple-path cost $O(E+V)$ time to compute.
+
+\section{Question 6: CLRS Exercise 16.1-1}
+
+This process fill a grid of $\frac{1}{2}n^2$ and take space and time of $\Theta(n^2)$. Greedy is one-pass and take only $\Theta(n)$.
+
+\begin{codebox}
+	\Procname{$\proc{AS-Adi($a$)}$}
+	\li $DP = [][]$
+	\li \Return \proc{AS-Adi($0,a.length$)}
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{AS-Adi($i,j$)}$}
+	\li \For $m \leftarrow j-1$ \Downto $i+1$
+	\li \Do \If $a[m].f \le a[j].s$ and $a[m].s \ge a[i].f$
+	\li \Then $S[i][j].push(a[m])$ \End \End
+	\li \If $S[i][j] = \emptyset$ 
+	\li \Then $DP[i][j] \leftarrow 0$
+	\li \Else 
+	\li \If $DP[i][j] = NIL$
+	\li \Then $DP[i][j] \leftarrow \underset{a[k] \in S[i][j]}{\max} \{\proc{AS-Adi($i,k$)} + 1 + \proc{AS-Adi($k,j$)} \} $ \End \End
+	\li \Return $DP[i][j]$
+	
+\end{codebox}
+
+\end{document}

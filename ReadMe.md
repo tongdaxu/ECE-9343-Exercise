@@ -30,9 +30,14 @@ Find the latex source in the same repo!
 
 ## Dynamic Programming and Greedy
 
+1. Huffman Code 
+
 ## Graphic Algorithms
 
 1. BFS
 2. DFS
 3. Topological-sort
 4. SCC
+5. Minimum Spanning Tree
+6. Single Source Shortest Path
+7. All-pairs Shortest Path

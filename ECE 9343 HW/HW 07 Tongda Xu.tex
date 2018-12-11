@@ -1,0 +1,64 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage{clrscode3e}
+\setlength{\parindent}{0pt}
+
+
+\title{HW07 for ECE 9343}
+\author{Tongda XU, N18100977}
+
+\begin{document}
+
+\maketitle
+
+\section{Question 1: Huffman Code Running}
+
+\section{Question 2: CLRS Problem Set 16.1}
+
+\section{Question 3: CLRS Exercise 24.3-6}
+
+Consider the modification of Dijkstra’s algorithm, growing the reliable tree from one root:
+
+\begin{codebox}
+	\Procname{$\proc{Initialize($G, root$)}$}
+	\li \For each $v \in G.V$
+	\li \Do	$v.d = 0$
+	\li 	$v.\pi = nullptr$ \End
+	\li  $root.d = 1$
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{Relax($u, v, r$)}$}
+	\li \If $u.d < v.d * r(u, v)$ 
+	\li 	\Then $u.d \leftarrow v.d * r(u, v)$
+	\li  		  $v.\pi \leftarrow u$ \End
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{Reliable-Path-Search($G, root$)}$}
+	\li \proc{Initialize($G, root$)}
+	\li $Q \leftarrow G.V$	
+	\li \While $!Q.empty$
+	\li \Do $u = \proc{Extract-Max(Q)}$
+	\li \For each $v \in G.E(u)$
+	\li \Do \proc{Relax($u, v, G.r$)}
+\end{codebox}
+
+\begin{codebox}
+	\Procname{$\proc{Print-Path($G, root, v$)}$}
+	\li \If $v = root$
+	\li \Then \Return
+	\li \Else
+	\li \If $v.\pi = nullptr$
+	\li \Then \proc{Print(no such path)} 
+	\li \Else
+	\li \proc{Print-Path($G, r, v.\pi$)}
+	\li \proc{Print(v)}
+\end{codebox}
+
+
+\section{Question 2: CLRS Problem Set 16.1}
+
+\end{document}

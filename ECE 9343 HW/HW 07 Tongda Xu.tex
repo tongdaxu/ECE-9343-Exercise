@@ -13,11 +13,49 @@
 
 \maketitle
 
-\section{Question 1: Huffman Code Running}
+\section{Question 1: CLRS Exercise 24.1-1}
 
-\section{Question 2: CLRS Problem Set 16.1}
+From vertex z : See Figure ~\ref{fig:2411-1}\\
+From vertex s : See Figure ~\ref{fig:2411-2}
 
-\section{Question 3: CLRS Exercise 24.3-6}
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{2411-1}
+	\caption{Exercise 24.1-1, part1}
+	\label{fig:2411-1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{2411-2}
+	\caption{Exercise 24.1-1, part2}
+	\label{fig:2411-2}
+\end{figure}
+
+
+\section{Question 2: CLRS Exercise 24.2-1}
+
+See Figure ~\ref{fig:2421}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{2421}
+	\caption{Exercise 24.2-1}
+	\label{fig:2421}
+\end{figure}
+
+\section{Question 3: CLRS Exercise 24.3-1}
+
+See Figure ~\ref{fig:2431}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{2431}
+	\caption{Exercise 24.3-1}
+	\label{fig:2431}
+\end{figure}
+
+\section{Question 4: CLRS Exercise 24.3-6}
 
 Consider the modification of Dijkstra’s algorithm, growing the reliable tree from one root:
 
@@ -59,6 +97,93 @@ Consider the modification of Dijkstra’s algorithm, growing the reliable tree f
 \end{codebox}
 
 
-\section{Question 2: CLRS Problem Set 16.1}
+\section{Question 5: CLRS Exercise 25.2-1}
+$
+D_{0} = 
+\begin{pmatrix}
+	0      &\infty &\infty &\infty &-1     &\infty \\
+	1      &0      &\infty &2      &\infty &\infty \\
+	\infty &2      &0      &\infty &\infty &-8     \\
+	-4     &\infty &\infty &0      &3      &\infty \\ 
+	\infty &7      &\infty &\infty &0      &\infty \\ 
+	\infty &5      &10     &\infty &\infty &0     
+\end{pmatrix} \quad
+D_{1} = 
+\begin{pmatrix}
+	0      &\infty &\infty &\infty &-1     &\infty \\
+	1      &0      &\infty &2      &0      &\infty \\
+	\infty &2      &0      &\infty &\infty &-8     \\
+	-4     &\infty &\infty &0      &-5     &\infty \\ 
+	\infty &7      &\infty &\infty &0      &\infty \\ 
+	\infty &5      &10     &\infty &\infty &0     
+\end{pmatrix}\\
+D_{2} = 
+\begin{pmatrix}
+0      &\infty &\infty &\infty &-1     &\infty \\
+1      &0      &\infty &2      &0      &\infty \\
+3      &2      &0      &4      &2      &-8     \\
+-4     &\infty &\infty &0      &-5     &\infty \\ 
+8      &7      &\infty &9      &0      &\infty \\ 
+6      &5      &10     &7      &5      &0     
+\end{pmatrix} \quad
+D_{3} = 
+\begin{pmatrix}
+0      &\infty &\infty &\infty &-1     &\infty \\
+1      &0      &\infty &2      &0      &\infty \\
+3      &2      &0      &4      &2      &-8     \\
+-4     &\infty &\infty &0      &-5     &\infty \\ 
+8      &7      &\infty &9      &0      &\infty \\ 
+6      &5      &10     &7      &5      &0        
+\end{pmatrix}	\\
+D_{4} = 
+\begin{pmatrix}
+0      &\infty &\infty &\infty &-1     &\infty \\
+-2     &0      &\infty &2      &0      &\infty \\
+0      &2      &0      &4      &2      &-8     \\
+-4     &\infty &\infty &0      &-5     &\infty \\ 
+8      &7      &\infty &9      &0      &\infty \\ 
+6      &5      &10     &7      &5      &0        
+\end{pmatrix}	\quad
+D_{5} = 
+\begin{pmatrix}
+0      &6      &\infty &8      &-1     &\infty \\
+-2     &0      &\infty &2      &0      &\infty \\
+0      &2      &0      &4      &2      &-8     \\
+-4     &10     &\infty &0      &-5     &\infty \\ 
+8      &7      &\infty &9      &0      &\infty \\ 
+6      &5      &10     &7      &5      &0        
+\end{pmatrix}	\\
+D_{6} = 
+\begin{pmatrix}
+0      &6      &\infty &8      &-1     &\infty \\
+-2     &0      &\infty &2      &0      &\infty \\
+-2     &-3     &0      &-1     &-3     &-8     \\
+-4     &10     &\infty &0      &-5     &\infty \\ 
+8      &7      &\infty &9      &0      &\infty \\ 
+6      &5      &10     &7      &5      &0        
+\end{pmatrix}	
+$
+\section{Question 6: CLRS Exercise 25.2-2}
+Consider the following dynamic programming function:\\
+$
+t_{ij}^{m} = 
+\begin{cases}
+	i = j & m = 0\\
+	\underset{1 \le k \le n}\bigcup (t_{ik}^{m-1} \cap (w_{kj} \neq \infty)) & 1 \le m \le n-1
+\end{cases}
+$
+
+\begin{codebox}
+	\Procname{$\proc{Transitive-Closure-Brutal-Force($G$)}$}
+	\li $n = G.V$
+	\li $l[n][n][n] \leftarrow 0$
+	\li \For each entry in $l[0]$
+	\li \Do $l[0][i][j] \leftarrow i = j$ \End
+	\li \For $m \leftarrow 1$ \To $n-1$
+	\li \Do \For $i \leftarrow 1$ \To $n$
+	\li \Do \For $j \leftarrow 1$ \To $n$
+	\li \Do $l[m][i][j] = \underset{1 \le k \le n}\bigcup (l[m-1][i][k] \cap (G.w_{kj} \neq \infty))$
+ 	\End \End \End
+\end{codebox}
 
 \end{document}

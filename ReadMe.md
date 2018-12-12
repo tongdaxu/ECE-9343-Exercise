@@ -7,6 +7,8 @@ Textbook: Introduction to algorithms 3rd Edition (CLRS)
 3. [hw 03 (Selection and Hashing) Grade 100](https://github.com/matonglidewazi/ECE-9343-Exercise/blob/master/ECE%209343%20HW/HW%2003%20Tongda%20Xu.pdf)
 4. [hw 04 (BST and Graph)](https://github.com/matonglidewazi/ECE-9343-Exercise/blob/master/ECE%209343%20HW/HW%2004%20Tongda%20Xu.pdf)
 5. [hw 05 (Dynamic Programming and Greedy)](https://github.com/matonglidewazi/ECE-9343-Exercise/blob/master/ECE%209343%20HW/HW%2005%20Tongda%20Xu.pdf)
+6. [hw 06 (Huffman Code, Graph)](https://github.com/matonglidewazi/ECE-9343-Exercise/blob/master/ECE%209343%20HW/HW%2006%20Tongda%20Xu.pdf)
+7. [hw 07 (Single Source Shortest Path, All-pair Shortest Path)](https://github.com/matonglidewazi/ECE-9343-Exercise/blob/master/ECE%209343%20HW/HW%2007%20Tongda%20Xu.pdf)
 
 Find the latex source in the same repo!
 

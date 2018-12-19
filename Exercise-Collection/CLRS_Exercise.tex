@@ -527,6 +527,38 @@ Too hard
 	\li \Return $DP[n]$
 \end{codebox}
 
+\subsection{15.6}
+
+Consider the root of tree appear or not, we can use a double table to store the optimized appear/not convivial here: 
+
+$N[i] = \underset{j \in i.child}{\Sigma} \max\{N[j], Y[j]\}\\
+ Y[i] = \underset{j \in i.child}{\Sigma} N[j] + w[i]\\
+ Return \quad \max {N[root], Y[root]}$
+ 
+\subsection{15.6}
+\subsection{a}
+
+Initialize, set trivial:
+$DP[k, v_{j}] \leftarrow \exists \delta(v_{j}, v_{k}) = \delta(k)\\
+DP[k, V-v_{j}] \leftarrow 0\\
+DP[other] \leftarrow nullptr$
+
+Maintain: 
+$DP[i, v_{j}] = \underset{\delta(v_{j}, v_{k}) = \delta_{i}}{\bigcup} \{DP[i+1, v_{k}]\}\\
+Return: DP[1, v_{0}]$
+
+\subsection{b}
+
+Initialize, set trivial:
+$DP[k, v_{j}] \leftarrow \exists \delta(v_{j}, v_{k}) = \delta(k)*p(v_{j}, whatever)\\
+DP[k, V-v_{j}] \leftarrow 0\\
+DP[other] \leftarrow nullptr$
+
+Maintain: 
+$DP[i, v_{j}] = \underset{\delta(v_{j}, v_{k}) = \delta_{i}}{\max} \{p(v_{j}, v_{k}) * DP[i+1, v_{k}]\}\\
+Return: DP[1, v_{0}]$
+
+
 \section{Greedy Algorithms}
 \subsection{16.1-1}
 
@@ -672,6 +704,10 @@ For adjacent matrix, the square process would be simple. for each index m of mat
 \end{codebox}
 
 The \proc{square($G$)} cost $\Theta(V^3)$ time and $\Theta(V)$ space (if optimize)
+
+\subsection{22.1-8}
+A hash table could bring the expected query time down to $\Theta(1)$ but the worst case would still be $\O(degree(u))$. \\
+A balanced BST could bring the expected and worst query time down to $\Theta(lg(degree(u)))$.
 
 \subsection{22.2-3}
 use $u.d = \infty$ as color
@@ -879,6 +915,12 @@ w[11:14] \rightarrow z[12:13] \rightarrow u[7:8] \rightarrow q[2:5] \rightarrow 
 \subsection{22.4-3}
 A \proc{DFS($G$)}/\proc{BFS($G$)} returns false when a back edge is found, easy to proof it is $\Theta (V)$
 
+\subsection{22.5-1}
+From no change happen to reduce to only 1.
+
+\subsection{22.5-3}
+
+
 \subsection{22.1}
 \subsubsection{a-1}
 
@@ -963,6 +1005,20 @@ Consider the $Edge(u,v)$ connects $u$ and $v$, we can find a cut that separate $
 \subsection{Exercise 23.1-2}
 Consider $\{(a,b), (a,c), (a,d)\}$, and the cut separate $\{a\}$ and $\{b,c,d\}$.
 
+\subsection{Exercise 23.2-3}
+$E = \frac{VlgV}{lgV-1}$, that is around $|V|$
+
+\subsection{Exercise 23.2-4}
+The bottle neck of Kruskal's algorithm is sorting. Suppose a counting sort with W upper bound, it takes $O(W+n)$. For radix sort it takes $O(nlgW)$. Finaly reduced to $O(ElgV)$
+
+\subsection{23-1}
+\subsubsection{a}
+Consider $G = \{(A,B):1, (B,C):2, (C,D):3, (D,A):5, (A,C):4\}$
+\subsubsection{b}
+Consider it does not contain, which means the second best MST has multi edge different from best MST. Then pick up an edge that is different from best MST and consider the cut that cutting through the graph into two parts. Call the edge that is broke by the cut in second best MST $v$ and the edge that is broke by the cut in the best MST $u$. Now we can substitute $v$ with $u$. Since $u$ is the light edge regard this cut, the weight of second best MST would reduce and still not the same as best MST. This contradicts the assumption.
+   
+\subsubsection{c}
+$DP(u,v) = \max \{DP(u, v.\pi), (u,v))\}$
 \section{Single-Source Shortest Paths}
 
 \subsection{Exercise 24.1-2}

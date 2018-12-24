@@ -1,4 +1,4 @@
-# New York University ECE EL-9343 Session A: Data Structure and Algorithm
+# New York University ECE EL-GY 9343 Session A: Data Structure and Algorithm
 Textbook: Introduction to algorithms 3rd Edition (CLRS)
 ## My Answer to Home Works (PDF)
 
